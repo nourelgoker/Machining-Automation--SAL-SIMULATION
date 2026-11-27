@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SAL Product 1 (Brass Ø25×66 mm) — 100% Unified with PDF & SolidWorks Cams v11</title>
+<style>
+  :root {
+    --bg: #080b15;
+    --panel: #111629;
+    --panel-2: #171e36;
+    --border: #28335c;
+    --text: #e9edf9;
+    --muted: #98a4c7;
+    --accent: #7c5cff;
+    --accent-2: #3b82f6;
+    --cyan: #22d3ee;
+    --amber: #f59e0b;
+    --green: #10b981;
+    --rose: #f43f5e;
+    --purple: #c084fc;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    background: linear-gradient(90deg, #17113b 0%, #1a2550 55%, #0f162e 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 18px;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px;
+  }
+  .title-block h1 {
+    font-size: 1.08rem; font-weight: 700;
+    background: linear-gradient(90deg, #fde047, #60a5fa);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .title-block p { font-size: 0.74rem; color: var(--muted); margin-top: 2px; }
+  .telemetry { display: flex; flex-wrap: wrap; gap: 7px; }
+  .badge {
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    border-radius: 8px; padding: 4px 9px; font-size: 0.74rem;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .badge span.lbl { color: var(--muted); font-size: 0.68rem; }
+  .badge strong { color: #fff; font-variant-numeric: tabular-nums; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); }
+
+  .main-grid {
+    flex: 1; display: grid; grid-template-columns: 1fr 390px; gap: 14px;
+    padding: 12px 16px 24px; max-width: 1760px; width: 100%; margin: 0 auto;
+  }
+  @media (max-width: 1200px) { .main-grid { grid-template-columns: 1fr; } }
+  .left-col { display: flex; flex-direction: column; gap: 12px; }
+
+  .card {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; padding: 11px; display: flex; flex-direction: column; gap: 9px;
+  }
+  .card-hdr { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 0 3px; }
+  .card-hdr h3 { font-size: 0.85rem; font-weight: 700; color: #c4b5fd; letter-spacing: 0.3px; }
+  .card-hdr .sub-ar { font-size: 0.74rem; color: var(--muted); direction: rtl; }
+
+  canvas { width: 100%; height: auto; background: #0c1020; border: 1px solid #242e55; border-radius: 8px; display: block; }
+  canvas#machineCanvas { aspect-ratio: 1140 / 455; }
+  canvas#stripCanvas   { aspect-ratio: 1140 / 48; border-radius: 6px; cursor: pointer; }
+  canvas#camsCanvas    { aspect-ratio: 1140 / 320; }
+  canvas#clutchCanvas  { aspect-ratio: 1140 / 390; }
+
+  .controls-bar {
+    background: var(--panel-2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 10px 13px; display: flex; flex-direction: column; gap: 8px;
+  }
+  .btn-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+  .btn-group { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+  button {
+    background: #232b4f; color: var(--text); border: 1px solid #394578;
+    border-radius: 7px; padding: 5px 10px; font-size: 0.76rem; font-weight: 600;
+    cursor: pointer; transition: all 0.14s ease;
+  }
+  button:hover { background: #303b6b; border-color: var(--accent); }
+  button.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); border: none; color: #fff; padding: 6px 14px; }
+  button.amber-btn { background: linear-gradient(135deg, #d97706, #f59e0b); border: none; color: #090c17; font-weight: 700; }
+  button.speed-btn.active, button.d1-btn.active, button.d2-btn.active {
+    background: rgba(124, 92, 255, 0.30); border-color: var(--accent); color: #e9d5ff;
+  }
+  .slider-wrap { display: flex; align-items: center; gap: 10px; }
+  input[type="range"] { flex: 1; accent-color: var(--accent); cursor: pointer; height: 6px; }
+  .angle-readout { min-width: 112px; text-align: right; font-weight: 700; font-size: 0.84rem; color: var(--cyan); font-variant-numeric: tabular-nums; }
+
+  .strip-legend { display: flex; flex-wrap: wrap; gap: 11px; font-size: 0.71rem; color: var(--muted); }
+  .strip-legend span { display: flex; align-items: center; gap: 5px; }
+  .sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+
+  .clutch-controls-row { display: grid; grid-template-columns: 1.18fr 0.82fr; gap: 10px; }
+  @media (max-width: 860px) { .clutch-controls-row { grid-template-columns: 1fr; } }
+  .ctrl-box {
+    background: #161d36; border: 1px solid #293561; border-radius: 8px;
+    padding: 7px 10px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px;
+  }
+  .ctrl-box .clbl { font-size: 0.72rem; color: #fde68a; font-weight: 700; }
+
+  /* Full PED 421 Operations & Cam Design Table */
+  .ops-table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid #26305a; }
+  table.ops-table {
+    width: 100%; border-collapse: collapse; font-size: 0.73rem; font-variant-numeric: tabular-nums;
+  }
+  table.ops-table th {
+    background: #1a2240; color: #c4b5fd; padding: 7px 6px; text-align: center;
+    border-bottom: 1px solid #303d6e; font-weight: 700; white-space: nowrap;
+  }
+  table.ops-table th:nth-child(2) { text-align: left; }
+  table.ops-table td {
+    padding: 5px 6px; border-bottom: 1px solid #1c2442; text-align: center; color: #d8e0f5;
+  }
+  table.ops-table td:nth-child(2) { text-align: left; font-weight: 600; color: #f1f5f9; }
+  table.ops-table tr { cursor: pointer; transition: background 0.12s; }
+  table.ops-table tr:hover { background: #1a2240; }
+  table.ops-table tr.active-row { background: rgba(124, 92, 255, 0.28) !important; outline: 1px solid var(--accent); }
+  table.ops-table tr.row-W td:nth-child(3) { color: #22d3ee; font-weight: 700; }
+  table.ops-table tr.row-I td:nth-child(3) { color: #c084fc; font-weight: 700; }
+  table.ops-table tr.row-C td:nth-child(3) { color: #fbbf24; font-weight: 700; }
+  table.ops-table tr.summary-row td {
+    background: #151c36; font-weight: 700; color: #fde047; border-top: 2px solid #3c4a82;
+  }
+  .ov-badge { color: #94a3b8; font-style: italic; }
+
+  .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 6px; }
+  .tool-card {
+    background: #161d36; border: 1px solid #27325c; border-radius: 6px;
+    padding: 5px 8px; font-size: 0.72rem; display: flex; align-items: flex-start; gap: 7px;
+  }
+  .tool-card.active-tool { border-color: var(--amber); background: rgba(245, 158, 11, 0.16); }
+  .tool-badge {
+    min-width: 20px; height: 20px; border-radius: 5px; display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 0.69rem; color: #090c17; flex-shrink: 0; margin-top: 1px;
+  }
+  .tool-info strong { display: block; color: #f1f5f9; font-size: 0.73rem; }
+  .tool-info span { display: block; color: var(--muted); font-size: 0.67rem; direction: rtl; text-align: left; }
+
+  .spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 0.72rem; margin-bottom: 4px; }
+  .spec-item {
+    background: #0d1224; border: 1px solid #242e57; border-radius: 6px;
+    padding: 5px 8px; display: flex; justify-content: space-between;
+  }
+  .spec-item span { color: var(--muted); }
+  .spec-item strong { color: #fde047; }
+
+  .sidebar { display: flex; flex-direction: column; gap: 11px; }
+  .side-card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 11px 13px; }
+  .side-card h2 {
+    font-size: 0.80rem; text-transform: uppercase; letter-spacing: 0.55px; color: #c4b5fd;
+    margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .phase-pill { font-size: 0.63rem; padding: 2px 8px; border-radius: 99px; font-weight: 700; }
+  .pill-aux     { background: rgba(245, 158, 11, 0.22); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.5); }
+  .pill-cam     { background: rgba(34, 211, 238, 0.18); color: #67e8f9; border: 1px solid rgba(34, 211, 238, 0.45); }
+  .pill-retract { background: rgba(192, 132, 252, 0.22); color: #e9d5ff; border: 1px solid rgba(192, 132, 252, 0.55); }
+  .pill-dwell   { background: rgba(16, 185, 129, 0.20); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.5); }
+
+  .phase-title-en { font-size: 0.91rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .phase-desc-ar {
+    direction: rtl; text-align: right; font-size: 0.82rem; line-height: 1.58; color: #dce4f9;
+    background: rgba(124, 92, 255, 0.09); border-right: 3px solid var(--accent);
+    padding: 7px 9px; border-radius: 6px; margin-bottom: 8px;
+  }
+  .active-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+  .chip { font-size: 0.68rem; padding: 3px 7px; border-radius: 5px; background: #1f2647; border: 1px solid #364272; color: #c7d2fe; }
+  canvas#chartCanvas { width: 100%; height: 140px; background: #0c1020; border: 1px solid #242e55; border-radius: 7px; }
+
+  .timeline { position: relative; max-height: 760px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; padding-right: 4px; }
+  .timeline::-webkit-scrollbar { width: 5px; }
+  .timeline::-webkit-scrollbar-thumb { background: #363f6b; border-radius: 4px; }
+  .step-item {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    padding: 5px 8px; border-radius: 7px; background: #0f1426; border: 1px solid transparent;
+    border-left: 3px solid #334155; cursor: pointer; transition: all 0.12s; font-size: 0.72rem;
+  }
+  .step-item:hover { background: #1c2342; border-color: #3a4578; }
+  .step-item.active { background: rgba(124, 92, 255, 0.24); border-color: var(--accent); }
+  .step-item.type-AUX     { border-left-color: #f59e0b; }
+  .step-item.type-RETRACT { border-left-color: #c084fc; }
+  .step-item.type-CAM     { border-left-color: #22d3ee; }
+  .step-item.type-DWELL   { border-left-color: #10b981; }
+  .step-left { display: flex; flex-direction: column; gap: 1px; }
+  .step-name { font-weight: 600; color: #eef2ff; }
+  .step-ar { font-size: 0.67rem; color: var(--muted); direction: rtl; text-align: left; }
+  .step-ang { font-variant-numeric: tabular-nums; font-size: 0.67rem; color: var(--cyan); white-space: nowrap; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="title-block">
+    <h1>Product 1 (Brass Ø25×66 mm) — Unified PDF + SolidWorks + Simulator v11</h1>
+    <p>100% Synced with Report & SolidWorks Package • Front Dual Groove (Cam 2) + Overlapped Rear Right 1×1 Chamfer (Cam 3) + Vertical Form Part-Off (Cam 4)</p>
+  </div>
+  <div class="telemetry">
+    <div class="badge"><span class="dot" id="runDot"></span><span class="lbl">Cam Pos</span><strong id="hdrAngle">0.0 / 100 (0.0°)</strong></div>
+    <div class="badge"><span class="lbl">Phase</span><strong id="hdrSubPhase" style="color:#fbbf24;">BAR FEED</strong></div>
+    <div class="badge"><span class="lbl">Station</span><strong id="hdrStation">St. 1 (Stock Stop)</strong></div>
+    <div class="badge"><span class="lbl">Spindle</span><strong id="hdrSpindle">500 RPM FWD</strong></div>
+    <div class="badge"><span class="lbl">Parts</span><strong id="hdrParts">0</strong></div>
+  </div>
+</header>
+
+<div class="main-grid">
+  <div class="left-col">
+
+    <!-- 1. MACHINE WORKING ZONE -->
+    <div class="card">
+      <canvas id="machineCanvas" width="1140" height="455"></canvas>
+
+      <div class="controls-bar">
+        <div class="btn-row">
+          <div class="btn-group">
+            <button class="primary" id="btnPlayPause">⏸ Pause</button>
+            <button id="btnStepM5">◀ -5°</button>
+            <button id="btnStepM1">-1°</button>
+            <button id="btnStepP1">+1°</button>
+            <button id="btnStepP5">+5° ▶</button>
+            <button id="btnReset">↺ Reset</button>
+          </div>
+          <div class="btn-group">
+            <span style="font-size:0.74rem; color:var(--muted);">Speed:</span>
+            <button class="speed-btn" data-speed="0.15">0.15× (Ultra Slow)</button>
+            <button class="speed-btn" data-speed="0.35">0.35×</button>
+            <button class="speed-btn active" data-speed="0.6">0.6×</button>
+            <button class="speed-btn" data-speed="1.2">1.2×</button>
+            <button class="speed-btn" data-speed="2.2">2.2×</button>
+          </div>
+        </div>
+
+        <canvas id="stripCanvas" width="1140" height="48" title="Click anywhere to jump to that cam part / angle!"></canvas>
+
+        <div class="slider-wrap">
+          <span style="font-size:0.73rem; color:var(--muted);">0/100</span>
+          <input type="range" id="angleSlider" min="0" max="359.9" step="0.5" value="0" />
+          <span style="font-size:0.73rem; color:var(--muted);">100/100</span>
+          <div class="angle-readout" id="sliderVal">0.0p (0.0°)</div>
+        </div>
+
+        <div class="strip-legend">
+          <span><i class="sw" style="background:#eab308;"></i>Bar Feed (0–4/100)</span>
+          <span><i class="sw" style="background:#06b6d4;"></i>Working Cut (66/100 = 452 rev)</span>
+          <span><i class="sw" style="background:#10b981;"></i>Rest / Dwell (1/100)</span>
+          <span><i class="sw" style="background:#a855f7;"></i><strong>Rapid Retract</strong></span>
+          <span><i class="sw" style="background:#f97316;"></i><strong>Turret Index</strong></span>
+          <span><i class="sw" style="background:#f43f5e;"></i><strong>Form Parting-Off (Ø25+Left 1×1)</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. SECTION C: REAL MILLIMETER CAMS GALLERY -->
+    <div class="card">
+      <div class="card-hdr">
+        <h3>C. ALL 6 SOLIDWORKS CAMS LIVE — REAL MILLIMETER RADII (MATCHES .BAS & .DXF 100%)</h3>
+        <span class="sub-ar">الـ 6 كامات بالمللي (Cam 1: 45–105 • Cam 2 Front: 40–60 • Cam 3 Rear: 40–60 • Cam 4 Vert: 40–60 • Cams 5&6 Drums)</span>
+      </div>
+      <canvas id="camsCanvas" width="1140" height="320"></canvas>
+    </div>
+
+    <!-- 3. SECTION D: PHYSICALLY FLAWLESS 3D-PROJECTED HELICAL GROOVE CLUTCH LAB -->
+    <div class="card">
+      <div class="card-hdr">
+        <h3>D. TRUE 3D-PROJECTED HELICAL GROOVE CLUTCH (FIXED PIVOT + CONTINUOUS ROTATING CAM TRACK)</h3>
+        <span class="sub-ar">محور ذراع ثابت 100% + مجرى حلزوني حقيقي بيلف على الأسطوانة (زي سلايد 62) — شوف البنز وهو بيرتكز بره والمجرى المائل بيطرد الجلبة عند 360°!</span>
+      </div>
+      <canvas id="clutchCanvas" width="1140" height="390"></canvas>
+      <div class="clutch-controls-row">
+        <div class="ctrl-box">
+          <span class="clbl">D1 (اختر كلاتش):</span>
+          <div class="btn-group">
+            <button class="d1-btn active" data-c="3">Clutch #3 (5 Dogs — Index)</button>
+            <button class="d1-btn" data-c="2">Clutch #2 (3 Dogs — Speed)</button>
+            <button class="d1-btn" data-c="1">Clutch #1 (1 Dog — Feed)</button>
+            <button class="d1-btn" data-c="auto">🔄 Auto</button>
+            <button class="amber-btn" id="btnSlowTestD1">⚡ Slow-Mo Demo (6s)</button>
+          </div>
+        </div>
+        <div class="ctrl-box">
+          <span class="clbl">D2 (تبديل ترسين السبندل):</span>
+          <div class="btn-group">
+            <button class="d2-btn" data-m="left">◀ Gear A (500 RPM)</button>
+            <button class="d2-btn" data-m="neutral">⏸ Neutral</button>
+            <button class="d2-btn" data-m="right">Gear B (REV) ▶</button>
+            <button class="d2-btn active" data-m="auto">🔄 Auto</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. FULL PED 421 OPERATIONS & CAM DESIGN TABLE (CLICK ANY ROW TO JUMP!) -->
+    <div class="card">
+      <div class="card-hdr">
+        <h3>E. PED 421 COMPLETE OPERATIONS &amp; CAM HEIGHTS SHEET — PRODUCT 1 (100 PARTS = 360°)</h3>
+        <span class="sub-ar">الجدول الكامل الجاهز للتسليم في سؤال 5 (اضغط على أي صف للانتقال إليه في المحاكاة)</span>
+      </div>
+      <div class="ops-table-wrap">
+        <table class="ops-table" id="opsTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Operation &amp; Tool</th>
+              <th>Type</th>
+              <th>Travel L (mm)</th>
+              <th>Feed f</th>
+              <th>W. Revs</th>
+              <th>Idle (/100)</th>
+              <th>All (/100)</th>
+              <th>Pos (/100)</th>
+              <th>Angle (°)</th>
+              <th>Cam 1 (1:1)</th>
+              <th>Cam 2 Fr (2:1)</th>
+              <th>Cam 3 Rr (2:1)</th>
+              <th>Cam 4 Vt (1:1)</th>
+            </tr>
+          </thead>
+          <tbody id="opsTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 5. OPTIMIZED TOOLING CARDS -->
+    <div class="card">
+      <div class="card-hdr">
+        <h3>F. UNIFIED TOOLING LAYOUT (ZERO CHAMFER ON TURRET — REAR SLIDE OVERLAPPED!)</h3>
+      </div>
+      <div class="tools-grid">
+        <div class="tool-card" id="tcard-0"><div class="tool-badge" style="background:#fbbf24;">1</div><div class="tool-info"><strong>Stock Stop (66 mm)</strong><span>تغذية 68.5 مم (66 + 2.5 نصل)</span></div></div>
+        <div class="tool-card" id="tcard-1"><div class="tool-badge" style="background:#38bdf8;">2</div><div class="tool-info"><strong>Long-Throat Box Tool #1</strong><span>خراطة Ø25→Ø20 (51.5 مم، 172 لفة)</span></div></div>
+        <div class="tool-card" id="tcard-2"><div class="tool-badge" style="background:#22d3ee;">3</div><div class="tool-info"><strong>Box Turning Tool #2</strong><span>خراطة Ø20→Ø16 (18.5 مم، 62 لفة)</span></div></div>
+        <div class="tool-card" id="tcard-3"><div class="tool-badge" style="background:#fb7185;">4</div><div class="tool-info"><strong>Die Head (M16×2)</strong><span>قلوظة 17 مم (33 FWD + 11 REV)</span></div></div>
+        <div class="tool-card" id="tcard-4"><div class="tool-badge" style="background:#94a3b8;">5</div><div class="tool-info"><strong>Clearance Plug</strong><span>محطة خلوص فارغة قبل الفصل</span></div></div>
+        <div class="tool-card" id="tcard-5"><div class="tool-badge" style="background:#64748b;">6</div><div class="tool-info"><strong>Empty (Double-Indexed)</strong><span>محطة فارغة (تُتخطى سريعاً)</span></div></div>
+        <div class="tool-card" id="tcard-front"><div class="tool-badge" style="background:#06b6d4;">F</div><div class="tool-info"><strong>Front Slide: Dual Groove (Cam 2)</strong><span>مجرى Ø18 (2 مم) + مجرى Ø12 (3 مم) — 42 لفة</span></div></div>
+        <div class="tool-card" id="tcard-rear"><div class="tool-badge" style="background:#c084fc;">R</div><div class="tool-info"><strong>Rear Slide: Right 1×1 (Cam 3)</strong><span>شطف الطرف اليمين Ø16→Ø14 (متداخل — 0 وقت!)</span></div></div>
+        <div class="tool-card" id="tcard-vert"><div class="tool-badge" style="background:#f43f5e; color:#fff;">V</div><div class="tool-info"><strong>Vertical: Form Parting (Cam 4)</strong><span>فصل 13.2 مم + شطف شمال Ø23 + تمهيد البار الجاي</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT SIDEBAR -->
+  <div class="sidebar">
+    <div class="side-card">
+      <h2><span>PED 421 Exact Summary</span><span class="phase-pill" style="background:rgba(16,185,129,0.2);color:#34d399;border:1px solid #10b981;">452 W. REVS</span></h2>
+      <div class="spec-grid">
+        <div class="spec-item"><span>Spindle (V=40)</span><strong>500 RPM</strong></div>
+        <div class="spec-item"><span>Thread (1:3)</span><strong>170 RPM</strong></div>
+        <div class="spec-item"><span>Play / Overcut</span><strong>0.2 / 0.5 mm</strong></div>
+        <div class="spec-item"><span>Parts (W / Idle)</span><strong>66 / 34 (/100)</strong></div>
+        <div class="spec-item"><span>Revs / Part</span><strong>6.85 rev/p</strong></div>
+        <div class="spec-item"><span>Total Revs</span><strong>684.8 rev</strong></div>
+        <div class="spec-item"><span>Machining Time</span><strong>53.3 sec</strong></div>
+        <div class="spec-item"><span>Cycle Time</span><strong>80.7 s (44.6/h)</strong></div>
+      </div>
+    </div>
+
+    <div class="side-card">
+      <h2>
+        <span>Current Stage Inspector</span>
+        <span class="phase-pill pill-aux" id="phasePill">AUXILIARY SHAFT</span>
+      </h2>
+      <div class="phase-title-en" id="phaseTitleEn">1. Bar Feeding &amp; Collet Clamping</div>
+      <div class="phase-desc-ar" id="phaseDescAr"></div>
+      <div class="active-chips" id="activeChips"></div>
+    </div>
+
+    <div class="side-card">
+      <h2><span>Cam Displacement S-Diagram (0–100p)</span></h2>
+      <canvas id="chartCanvas" width="350" height="140"></canvas>
+    </div>
+
+    <div class="side-card">
+      <h2><span>Live Sequence (21 Intervals — Click)</span></h2>
+      <div class="timeline" id="timelineList"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const mCanvas   = document.getElementById('machineCanvas');
+  const mctx      = mCanvas.getContext('2d');
+  const sCanvas   = document.getElementById('stripCanvas');
+  const sctx      = sCanvas.getContext('2d');
+  const camCanvas = document.getElementById('camsCanvas');
+  const cmctx     = camCanvas.getContext('2d');
+  const clCanvas  = document.getElementById('clutchCanvas');
+  const kctx      = clCanvas.getContext('2d');
+  const chCanvas  = document.getElementById('chartCanvas');
+  const cctx      = chCanvas.getContext('2d');
+
+  const hdrAngle     = document.getElementById('hdrAngle');
+  const hdrSubPhase  = document.getElementById('hdrSubPhase');
+  const hdrStation   = document.getElementById('hdrStation');
+  const hdrSpindle   = document.getElementById('hdrSpindle');
+  const hdrParts     = document.getElementById('hdrParts');
+  const runDot       = document.getElementById('runDot');
+  const btnPlayPause = document.getElementById('btnPlayPause');
+  const angleSlider  = document.getElementById('angleSlider');
+  const sliderVal    = document.getElementById('sliderVal');
+  const phasePill    = document.getElementById('phasePill');
+  const phaseTitleEn = document.getElementById('phaseTitleEn');
+  const phaseDescAr  = document.getElementById('phaseDescAr');
+  const activeChips  = document.getElementById('activeChips');
+  const timelineList = document.getElementById('timelineList');
+  const opsTableBody = document.getElementById('opsTableBody');
+  const btnSlowTestD1 = document.getElementById('btnSlowTestD1');
+
+  function rRect(c, x, y, w, h, r) {
+    let tl, tr, br, bl;
+    if (Array.isArray(r)) [tl, tr, br, bl] = r;
+    else tl = tr = br = bl = r;
+    c.beginPath();
+    c.moveTo(x + tl, y); c.lineTo(x + w - tr, y); c.quadraticCurveTo(x + w, y, x + w, y + tr);
+    c.lineTo(x + w, y + h - br); c.quadraticCurveTo(x + w, y + h, x + w - br, y + h);
+    c.lineTo(x + bl, y + h); c.quadraticCurveTo(x, y + h, x, y + h - bl);
+    c.lineTo(x, y + tl); c.quadraticCurveTo(x, y, x + tl, y);
+    c.closePath();
+  }
+
+  function smoothstep(t) {
+    t = Math.max(0, Math.min(1, t));
+    return t * t * (3 - 2 * t);
+  }
+
+  function drawPanelFrame(c, x, y, w, h, title, badgeText, badgeColor) {
+    c.save();
+    rRect(c, x, y, w, h, 8);
+    c.fillStyle = '#111629'; c.fill();
+    c.strokeStyle = '#27325b'; c.lineWidth = 1.2; c.stroke();
+    c.fillStyle = '#1a213d';
+    rRect(c, x, y, w, 23, [8, 8, 0, 0]); c.fill();
+    c.fillStyle = '#b9c4e6'; c.font = 'bold 10.5px Segoe UI, sans-serif';
+    c.fillText(title, x + 10, y + 15);
+    if (badgeText) {
+      c.font = 'bold 9.5px Segoe UI, sans-serif';
+      const tw = c.measureText(badgeText).width + 12;
+      rRect(c, x + w - tw - 7, y + 3.5, tw, 16, 8);
+      c.fillStyle = badgeColor + '28'; c.fill();
+      c.strokeStyle = badgeColor; c.lineWidth = 1; c.stroke();
+      c.fillStyle = badgeColor; c.fillText(badgeText, x + w - tw - 1, y + 14.5);
+    }
+    c.restore();
+  }
+
+  function drawSpinRibs(c, x, y, w, h, phase, color) {
+    c.save();
+    c.beginPath(); c.rect(x, y, w, h); c.clip();
+    c.strokeStyle = color; c.lineWidth = 2;
+    const step = 13, off = ((phase % step) + step) % step;
+    for (let ry = y - step; ry < y + h + step; ry += step) {
+      c.beginPath(); c.moveTo(x + 2, ry + off); c.lineTo(x + w - 2, ry + off); c.stroke();
+    }
+    c.restore();
+  }
+
+  // =========================================================================
+  // EXACT PED 421 100-PART (360°) SCHEDULE — ZERO ROUNDING DISTORTION!
+  // 1 Part = 3.6° | Idle = 34 parts | Working = 66 parts | Total W.Revs = 452
+  // =========================================================================
+  const STAGES = [
+    {
+      id: 0, pStart: 0, pEnd: 4, type: 'AUX', code: 'C', sub: 'BAR FEED 68.5mm', color: '#eab308',
+      nameEn: '1. Bar Feed & Collet Clamp (Aux Cl #1)',
+      nameAr: 'فتح الكوليت + تغذية البار 68.5 مم + قفل الكوليت',
+      L: '68.5', f: '—', rev: '—', c1: '77.0', c2: '40.0', c3: '40.0',
+      descAr: 'Trip Dog #1 (عند 0/100) يعشّق كلاتش #1 على العمود المساعد (120 RPM) لفة واحدة: كامتي الأسطوانة (Cam 4) تفتحان الكوليت ← صباع التغذية يزق بار النحاس Ø25 لحد Stock Stop (66 + 2.5 = 68.5 مم) ← الكوليت يقفل.',
+      chips: ['0–4/100 (4p)', 'Clutch #1 (120 RPM)', 'Cam 4 Drum Cams']
+    },
+    {
+      id: 1, pStart: 4, pEnd: 6, type: 'RETRACT', code: 'I', sub: 'RETRACT 1', color: '#a855f7',
+      nameEn: '2. Rapid Retract 1 (Clear Stock Stop)',
+      nameAr: 'رجوع سريع للبرج للـ Base Circle قبل اللف',
+      L: '32.0', f: '—', rev: '—', c1: '77.0→45.0', c2: '40.0', c3: '40.0',
+      descAr: 'هبوط Cam 1 من R=77 مم إلى Rmin=45 مم؛ السوستة تسحب عربة البرج للخلف بالكامل لتوفير خلوص أمان قبل الـ Indexing.',
+      chips: ['4–6/100 (2p)', 'Cam 1: 77→45 mm', 'Safe Clearance']
+    },
+    {
+      id: 2, pStart: 6, pEnd: 9, type: 'AUX', code: 'C', sub: 'INDEX 1→2', color: '#f97316',
+      nameEn: '3. Turret Index (St. 1 → St. 2, Aux Cl #3)',
+      nameAr: 'لف البرج 60° بعجلة جنيف لحامل الخراطة #1',
+      L: '60°', f: '—', rev: '—', c1: '45.0', c2: '40.0', c3: '40.0',
+      descAr: 'Trip Dog #3 الأول (عند 6/100) يرفع الرولر ويسحب البنز ← كلاتش #3 يلف عجلة جنيف 60° فتأتي محطة 2 (Long-Throat Box Tool #1) قدام البار.',
+      chips: ['6–9/100 (3p)', 'Clutch #3 (Dog #1)', 'Geneva 60°']
+    },
+    {
+      id: 3, pStart: 9, pEnd: 34, type: 'CAM', code: 'W', sub: 'OP 1: TURN Ø20', color: '#06b6d4',
+      nameEn: '4. Op 1: Box Turn Ø25 → Ø20 (L = 51 + 0.5 mm)',
+      nameAr: 'عملية 1: خراطة Ø25 ← Ø20 بطول 51.5 مم (172 لفة)',
+      L: '51.5', f: '0.30', rev: '172', c1: '53.5→105.0', c2: '40.0', c3: '40.0',
+      descAr: 'الفص الأول على Cam 1 (25/100 = 90°): تقريب سريع للـ 53.5 مم ثم تغذية قطع منتظمة حتى Rmax=105 مم (مشوار 51.5 مم ÷ 0.3 = 172 لفة). لاحظ إن البرج بيجوف عميق فمفيش أي تصادم مع طرف البار!',
+      chips: ['9–34/100 (25p)', '172 rev @ f_a=0.3', 'Cam 1: 53.5→105 mm']
+    },
+    {
+      id: 4, pStart: 34, pEnd: 35, type: 'DWELL', code: 'C', sub: 'REST (1p)', color: '#10b981',
+      nameEn: '5. Rest / Dwell after Op 1 (Clean Shoulder)',
+      nameAr: 'ثبات Dwell (جزء واحد = 3.6°) لتنظيف كتف Ø25',
+      L: '0', f: '—', rev: '—', c1: '105.0', c2: '40.0', c3: '40.0',
+      descAr: 'حسب قاعدة PED 421: ثبات جزء واحد (Rest = 1 part) بعد عملية القطع عند R=105 مم عشان لقمة القطع تمسح الكتف بنظافة قبل الرجوع.',
+      chips: ['34–35/100 (1p)', 'PED 421 Rest Rule', 'Cam 1 Dwell 105 mm']
+    },
+    {
+      id: 5, pStart: 35, pEnd: 37, type: 'RETRACT', code: 'I', sub: 'RETRACT 2', color: '#a855f7',
+      nameEn: '6. Rapid Retract 2 (Exit Box Tool #1)',
+      nameAr: 'رجوع سريع لحامل الخراطة #1 قبل الـ Indexing',
+      L: '60.0', f: '—', rev: '—', c1: '105.0→45.0', c2: '40.0', c3: '40.0',
+      descAr: 'هبوط حاد في Cam 1 من 105 مم لـ 45 مم ← السوستة تسحب الـ Box Tool #1 بالكامل بره أسطوانة Ø20 قبل لف البرج.',
+      chips: ['35–37/100 (2p)', 'Cam 1: 105→45 mm', 'Full Clearance']
+    },
+    {
+      id: 6, pStart: 37, pEnd: 40, type: 'AUX', code: 'C', sub: 'INDEX 2→3', color: '#f97316',
+      nameEn: '7. Turret Index (St. 2 → St. 3, Aux Cl #3)',
+      nameAr: 'لف البرج 60° لحامل الخراطة الثاني (Ø20→Ø16)',
+      L: '60°', f: '—', rev: '—', c1: '45.0', c2: '40.0', c3: '40.0',
+      descAr: 'Trip Dog #3 التاني (عند 37/100) يعشّق كلاتش #3 فتلف عجلة جنيف 60° وتجيب الـ Box Turning Tool #2 (محطة 3).',
+      chips: ['37–40/100 (3p)', 'Clutch #3 (Dog #2)', 'St. 3: Box Tool #2']
+    },
+    {
+      id: 7, pStart: 40, pEnd: 49, type: 'CAM', code: 'W', sub: 'OP 2: TURN Ø16', color: '#06b6d4',
+      nameEn: '8. Op 2: Box Turn Ø20 → Ø16 (L = 18 + 0.5 mm)',
+      nameAr: 'عملية 2: خراطة قطر القلوظة Ø20 ← Ø16 (62 لفة)',
+      L: '18.5', f: '0.30', rev: '62', c1: '72.0→90.5', c2: '40.0', c3: '40.0',
+      descAr: 'الفص التاني على Cam 1 (9/100 = 32.4°): يدفع الـ Box Tool #2 لمسافة 18.5 مم (÷ 0.3 = 62 لفة) لتجهيز أسطوانة الـ M16 بطول 18 مم.',
+      chips: ['40–49/100 (9p)', '62 rev @ f_a=0.3', 'Cam 1: 72→90.5 mm']
+    },
+    {
+      id: 8, pStart: 49, pEnd: 50, type: 'DWELL', code: 'C', sub: 'REST (1p)', color: '#10b981',
+      nameEn: '9. Rest / Dwell after Op 2 (Clean Ø16 Step)',
+      nameAr: 'ثبات Dwell (جزء واحد) لتنظيف كتف Ø16',
+      L: '0', f: '—', rev: '—', c1: '90.5', c2: '40.0', c3: '40.0',
+      descAr: 'ثبات جزء واحد عند R=90.5 مم قبل سحب العدة للخلف.',
+      chips: ['49–50/100 (1p)', 'Cam 1 Dwell 90.5 mm']
+    },
+    {
+      id: 9, pStart: 50, pEnd: 52, type: 'RETRACT', code: 'I', sub: 'RETRACT 3', color: '#a855f7',
+      nameEn: '10. Rapid Retract 3 (Clear Box Tool #2)',
+      nameAr: 'رجوع سريع للبرج قبل دخول العربة الأمامية 3×1',
+      L: '45.5', f: '—', rev: '—', c1: '90.5→45.0', c2: '40.0', c3: '40.0',
+      descAr: 'هبوط Cam 1 من 90.5 مم لـ 45 مم لفتح المجال بالكامل قدام قلم التشكيل الثلاثي على العربة الأمامية.',
+      chips: ['50–52/100 (2p)', 'Cam 1: 90.5→45 mm']
+    },
+    {
+      id: 10, pStart: 52, pEnd: 58, type: 'CAM', code: 'W', sub: 'OP 3: GROOVES + REAR CH', color: '#06b6d4',
+      nameEn: '11. Op 3: Front Dual Grooves (Ø18, Ø12) + Overlapped Rear 1×1 Chamfer',
+      nameAr: 'عملية 3 (متداخل): العربة الأمامية (Ø18 و Ø12) + العربة الخلفية (شطف اليمين Ø16→Ø14)',
+      L: '4.2', f: '0.10', rev: '42', c1: '45.0', c2: '51.6→60.0', c3: '40.0',
+      descAr: 'التصميم القياسي المتين (متطابق 100% مع التقرير والسوليدوركس!): العربة الأمامية (Cam 2، 2:1) تقطع المجرى Ø18 و Ø12 (4.2 مم = 42 لفة)، وفي نفس الوقت العربة الخلفية (Cam 3، 2:1، متداخلة بدون وقت إضافي) تشطف الطرف اليمين 1×1 (Ø16→Ø14، 12 لفة) بجساءة عالية بدون رجرجة!',
+      chips: ['52–58/100 (6p)', 'Front 42 rev (Governing)', 'Rear 12 rev (Overlapped!)']
+    },
+    {
+      id: 11, pStart: 58, pEnd: 59, type: 'DWELL', code: 'C', sub: 'REST (1p)', color: '#10b981',
+      nameEn: '12. Rest / Dwell after Front 3-in-1 Form Cut',
+      nameAr: 'ثبات Dwell (جزء واحد) لتنعيم قاع المجاري والشطفة',
+      L: '0', f: '—', rev: '—', c1: '45.0', c2: '60.0', c3: '40.0',
+      descAr: 'ثبات جزء واحد عند R=60 مم على Cam 2 عشان قاع مجرى Ø12 و Ø18 والشطفة اليمين تطلع ناعمة ومستديرة تماماً.',
+      chips: ['58–59/100 (1p)', 'Cam 2 Dwell 60 mm']
+    },
+    {
+      id: 12, pStart: 59, pEnd: 62, type: 'AUX', code: 'C', sub: 'IDX 3→4 + 170RPM', color: '#f97316',
+      nameEn: '13. Index (St. 3→4 Die Head) + 170 RPM [Front Ret Ov.]',
+      nameAr: 'لف البرج مباشرة للـ Die Head (محطة 4) + 170 RPM (مع رجوع الأمامية متداخل)',
+      L: '60°', f: '—', rev: '—', c1: '45.0', c2: '(60→40)', c3: '40.0',
+      descAr: 'تداخل ذكي (Overlap): رجوع العربة الأمامية (60→40 مم) بيحصل في نفس وقت لف البرج للّقمة M16 (كلاتش #3) وتقليل سرعة السبندل لـ 170 RPM (كلاتش #2) فما بيستهلكش زمن إضافي!',
+      chips: ['59–62/100 (3p)', 'Front Retract Overlapped!', 'Clutch #3 & #2']
+    },
+    {
+      id: 13, pStart: 62, pEnd: 67, type: 'CAM', code: 'W', sub: 'OP 4a: THREAD FWD', color: '#06b6d4',
+      nameEn: '14. Op 4a: Thread M16×2 FWD (11 thd @ 170 RPM)',
+      nameAr: 'عملية 4أ: قلوظة خارجية M16×2 أمامي (33 لفة مكافئة)',
+      L: '17.0', f: 'p=2.0', rev: '33', c1: '74.0→91.0', c2: '40.0', c3: '40.0',
+      descAr: 'الفص التالت على Cam 1 (5/100): يدفع لقمة القلوظة M16×2 بسرعة 170 RPM (نسبة 1:3) لقطع 11 سن (8.5 فعلي + 2.5 دخول) حتى مجرى Ø12 (33 لفة مكافئة عند 500 RPM).',
+      chips: ['62–67/100 (5p)', '33 eq rev @ 170 RPM', 'Cam 1: 74→91 mm']
+    },
+    {
+      id: 14, pStart: 67, pEnd: 68, type: 'AUX', code: 'C', sub: 'REV SWITCH', color: '#f59e0b',
+      nameEn: '15. Spindle Reversal Switch (Aux Cl #2 → D2 REV)',
+      nameAr: 'عكس دوران السبندل (كلاتش #2 يحرّك شوكة D2 لترس B)',
+      L: '—', f: '—', rev: '—', c1: '91.0', c2: '40.0', c3: '40.0',
+      descAr: 'عند 67/100 يضرب Trip Dog #2 التاني فيعشّق كلاتش #2 ويحرّك شوكة كلاتش السبندل في D2 لعكس الدوران (500 RPM REV) لفك اللقمة!',
+      chips: ['67–68/100 (1p)', 'Clutch #2 (Dog #2)', 'Spindle → REV']
+    },
+    {
+      id: 15, pStart: 68, pEnd: 70, type: 'CAM', code: 'W', sub: 'OP 4b: UNSCREW REV', color: '#06b6d4',
+      nameEn: '16. Op 4b: Unscrew M16 Die Head REV (11 rev @ 500 RPM)',
+      nameAr: 'عملية 4ب: فك وخروج لقمة القلوظة بسرعة عكسية سريعة (11 لفة)',
+      L: '17.0', f: 'p=2.0', rev: '11', c1: '91.0→74.0', c2: '40.0', c3: '40.0',
+      descAr: 'هبوط منتظم في Cam 1 (91→74 مم) متزامن مع خطوة السن 2 مم عند سرعة عكسية عالية (500 RPM → 11 لفة فقط = جزأين).',
+      chips: ['68–70/100 (2p)', '11 rev @ 500 REV', 'Cam 1: 91→74 mm']
+    },
+    {
+      id: 16, pStart: 70, pEnd: 72, type: 'RETRACT', code: 'I', sub: 'RETRACT 4', color: '#a855f7',
+      nameEn: '17. Rapid Retract 4 (Exit Die Head)',
+      nameAr: 'رجوع سريع للقمة القلوظة للـ Base Circle',
+      L: '29.0', f: '—', rev: '—', c1: '74.0→45.0', c2: '40.0', c3: '40.0',
+      descAr: 'هبوط Cam 1 من 74 مم إلى 45 مم لسحب لقمة القلوظة بالكامل بعيداً عن السن قبل الـ Indexing.',
+      chips: ['70–72/100 (2p)', 'Cam 1: 74→45 mm']
+    },
+    {
+      id: 17, pStart: 72, pEnd: 75, type: 'AUX', code: 'C', sub: 'IDX 4→5 + 500RPM', color: '#f97316',
+      nameEn: '18. Index (St. 4→5 Clearance) + Restore 500 RPM FWD',
+      nameAr: 'لف البرج لمحطة الخلوص + رجوع السبندل 500 RPM أمامي',
+      L: '60°', f: '—', rev: '—', c1: '45.0', c2: '40.0', c3: '40.0',
+      descAr: 'عند 72/100: كلاتش #2 يرجّع الشوكة في D2 لترس (A) الأمامي السريع (500 RPM)، وكلتش #3 يلف البرج لمحطة 5 الفارغة.',
+      chips: ['72–75/100 (3p)', 'Clutch #3 & #2', 'Restore 500 RPM']
+    },
+    {
+      id: 18, pStart: 75, pEnd: 94, type: 'CAM', code: 'W', sub: 'OP 5: FORM PART-OFF', color: '#f43f5e',
+      nameEn: '19. Op 5: Form Parting-Off (12.5 + 0.5 Overcut + 0.2 Play)',
+      nameAr: 'عملية 5: فصل المنتج (13.2 مم = 132 لفة) + شطف شمال Ø25→Ø23 + تمهيد البار الجاي',
+      L: '13.2', f: '0.10', rev: '132', c1: '45.0', c2: '40.0', c3: '46.8→60.0',
+      descAr: 'سكينة الفصل بالـ Forming على العربة الرأسية (Cam 3، نسبة 1:1): مشوارها الدقيق حسب PED 421 هو 12.5 (نصف قطر) + 0.5 (Overcut) + 0.2 (Play) = 13.2 مم (132 لفة = 19/100). الكتف اليمين 45° يشطف الطرف الشمال للمنتج (Ø25→Ø23) والكتف الشمال يشطف وش البار الجاي للتمهيد!',
+      chips: ['75–94/100 (19p)', '132 rev @ f_r=0.1', 'Cam 3: 46.8→60 mm']
+    },
+    {
+      id: 19, pStart: 94, pEnd: 98, type: 'AUX', code: 'C', sub: 'DBL-IDX → ST.1', color: '#f97316',
+      nameEn: '20. Double-Index (5→6→1) [Vertical Retract Overlapped!]',
+      nameAr: 'لف البرج خطوتين لمحطة 1 (بالتزامن مع رجوع سكينة الفصل!)',
+      L: '120°', f: '—', rev: '—', c1: '45.0', c2: '40.0', c3: '(60→40)',
+      descAr: 'تداخل ذكي تاني: سكينة الفصل بترجع لفوق (60→40 مم) عند وش الظرف في نفس اللحظة اللي البرج بيلف فيها بعيداً عند اليمين (Double Index 5→6→1) ليرجع الـ Stock Stop!',
+      chips: ['94–98/100 (4p)', 'Vert Retract Overlapped!', 'Double Index 120°']
+    },
+    {
+      id: 20, pStart: 98, pEnd: 100, type: 'CAM', code: 'I', sub: 'STOP APPROACH', color: '#3b82f6',
+      nameEn: '21. Pre-Advance Stock Stop to 66 mm (R = 77 mm)',
+      nameAr: 'تجهيز الـ Stock Stop على بعد 66 مم للدورة الجديدة',
+      L: '32.0', f: '—', rev: '—', c1: '45.0→77.0', c2: '40.0', c3: '40.0',
+      descAr: 'Cam 1 يرفع مصد الطول من Rmin=45 مم إلى R=77 مم قبل 100/100 (360°) لتبدأ دورة المنتج التالي (80.7 ثانية/قطعة ≈ 44.6 قطعة/ساعة!).',
+      chips: ['98–100/100 (2p)', 'Cam 1: 45→77 mm', 'Cycle: 80.7s (44.6/hr)']
+    }
+  ];
+
+  // Convert pStart / pEnd (0..100) to degrees (0..360) for every stage
+  STAGES.forEach(s => {
+    s.start = s.pStart * 3.6;
+    s.end   = s.pEnd   * 3.6;
+  });
+
+  // Exact Trip Dogs (in degrees!) matching exact 100-part start positions!
+  const TRIP_DOGS = {
+    1: [0.0],                             // 0/100
+    2: [59 * 3.6, 67 * 3.6, 72 * 3.6],    // 59, 67, 72 / 100 (212.4°, 241.2°, 259.2°)
+    3: [6 * 3.6, 37 * 3.6, 59 * 3.6, 72 * 3.6, 94 * 3.6] // 5 index trips!
+  };
+  const CLUTCH_WIN = { 1: 14.4, 2: 9.0, 3: 10.8 };
+
+  const STATION_INFO = [
+    { short: 'St. 1 (Stock Stop)',      en: 'Adjustable Stock Stop (66 mm)',    ar: 'مصد ضبط الطول 66 مم',         color: '#fbbf24' },
+    { short: 'St. 2 (Long Box #1 Ø20)', en: 'Long-Throat Box Tool #1 (Ø25→Ø20)',ar: 'خراطة Ø25←Ø20 (51.5 مم)',     color: '#38bdf8' },
+    { short: 'St. 3 (Box Tool #2 Ø16)', en: 'Box Turning Tool #2 (Ø20→Ø16)',    ar: 'خراطة Ø20←Ø16 (18.5 مم)',     color: '#22d3ee' },
+    { short: 'St. 4 (Die Head M16)',    en: 'Die Head (M16×2, L=17 mm)',        ar: 'لقمة قلوظة M16 بطول 17 مم',   color: '#fb7185' },
+    { short: 'St. 5 (Clearance)',       en: 'Clearance / Empty Plug',           ar: 'محطة خلوص فارغة',             color: '#94a3b8' },
+    { short: 'St. 6 (Empty / Skipped)', en: 'Empty Station (Double-Indexed)',   ar: 'محطة فارغة (تُتخطى)',         color: '#64748b' }
+  ];
+
+  // Build Sidebar Timeline + Full PED 421 Operations Sheet Table!
+  STAGES.forEach(st => {
+    // 1. Sidebar item
+    const div = document.createElement('div');
+    div.className = `step-item type-${st.type}`;
+    div.id = 'step-' + st.id;
+    div.innerHTML = `
+      <div class="step-left">
+        <span class="step-name">${st.nameEn}</span>
+        <span class="step-ar">${st.nameAr}</span>
+      </div>
+      <span class="step-ang">${st.pStart}–${st.pEnd}p</span>
+    `;
+    div.addEventListener('click', () => { camAngle = st.start + 0.4; angleSlider.value = camAngle; renderAll(); });
+    timelineList.appendChild(div);
+
+    // 2. Full Operations Table Row
+    const parts = st.pEnd - st.pStart;
+    const isW = st.code === 'W';
+    const tr = document.createElement('tr');
+    tr.id = 'trow-' + st.id;
+    tr.className = `row-${st.code}`;
+    tr.innerHTML = `
+      <td>${st.id + 1}</td>
+      <td>${st.nameEn.replace(/^\d+\.\s*/, '')}</td>
+      <td>${st.code}</td>
+      <td>${st.L}</td>
+      <td>${st.f}</td>
+      <td>${st.rev}</td>
+      <td>${isW ? '—' : parts}</td>
+      <td>${parts}</td>
+      <td>${st.pStart}–${st.pEnd}</td>
+      <td>${st.start.toFixed(1)}°–${st.end.toFixed(1)}°</td>
+      <td>${st.c1}</td>
+      <td class="${st.c2.startsWith('(') ? 'ov-badge' : ''}">${st.c2}</td>
+      <td class="${st.id === 10 || st.id === 11 || st.id === 12 ? 'ov-badge' : ''}">${st.id === 10 ? '(57.6→60)' : (st.id === 11 ? '(60→40)' : '40.0')}</td>
+      <td class="${st.c3.startsWith('(') ? 'ov-badge' : ''}">${st.c3}</td>
+    `;
+    tr.addEventListener('click', () => { camAngle = st.start + 0.4; angleSlider.value = camAngle; renderAll(); });
+    opsTableBody.appendChild(tr);
+  });
+
+  // Totals summary row in table
+  const sumTr = document.createElement('tr');
+  sumTr.className = 'summary-row';
+  sumTr.innerHTML = `
+    <td colspan="5" style="text-align:right;">TOTALS (N = 500 RPM • 6.85 rev/part • T_m = 53.3 s • T_cycle = 80.7 s • 44.6 pcs/hr)</td>
+    <td>452</td>
+    <td>34</td>
+    <td>100</td>
+    <td>0–100</td>
+    <td>0°–360°</td>
+    <td>45–105 mm</td>
+    <td>40–60 mm</td>
+    <td>40–60 mm</td>
+    <td>40–60 mm</td>
+  `;
+  opsTableBody.appendChild(sumTr);
+
+  // Global State
+  let camAngle = 0, auxAngle = 0, spindleAngle = 0;
+  let gearAAngle = 0, gearBAngle = 0, d2OutputAngle = 0;
+  let d2SleevePos = -1, d1Selected = '3', d2ManualMode = 'auto';
+  let d1SlowTestActive = false, d1SlowTestPhase = 0;
+  let isPlaying = true, speedMult = 0.6, partsDone = 0;
+  let lastTime = performance.now();
+
+  // =========================================================================
+  // EXACT REAL-MILLIMETER CAM RADIUS FUNCTIONS (Driven by 0..100 Parts!)
+  // =========================================================================
+  // Cam 1 (Turret Multicurve Disc Cam): Scale 1:1, Rmin = 45.0 mm, Rmax = 105.0 mm (range = 60 mm)
+  function getCam1RadiusMM(deg) {
+    const p = (((deg % 360) + 360) % 360) / 3.6; // 0..100 parts
+    if (p < 4)   return 77.0;                                                // Stock Stop at 66 mm
+    if (p < 6)   return 77.0 - 32.0 * smoothstep((p - 4) / 2);               // Retract 1 -> 45 mm
+    if (p < 9)   return 45.0;                                                // Index 1->2
+    // Op 1 (9..34): Quick approach 9..11 (45->53.5), Cut 11..34 (53.5->105.0)
+    if (p < 11)  return 45.0 + 8.5 * smoothstep((p - 9) / 2);
+    if (p < 34)  return 53.5 + 51.5 * ((p - 11) / 23);
+    if (p < 35)  return 105.0;                                               // Rest (1p)
+    if (p < 37)  return 105.0 - 60.0 * smoothstep((p - 35) / 2);             // Retract 2 -> 45 mm
+    if (p < 40)  return 45.0;                                                // Index 2->3
+    // Op 2 (40..49): Quick approach 40..41.5 (45->72.0), Cut 41.5..49 (72.0->90.5)
+    if (p < 41.5) return 45.0 + 27.0 * smoothstep((p - 40) / 1.5);
+    if (p < 49)  return 72.0 + 18.5 * ((p - 41.5) / 7.5);
+    if (p < 50)  return 90.5;                                                // Rest (1p)
+    if (p < 52)  return 90.5 - 45.5 * smoothstep((p - 50) / 2);              // Retract 3 -> 45 mm
+    if (p < 62)  return 45.0;                                                // Front 3-in-1 + Index 3->4
+    // Op 4a (62..67): Approach 62..63 (45->74.0), Thread FWD 63..67 (74.0->91.0)
+    if (p < 63)  return 45.0 + 29.0 * smoothstep((p - 62) / 1);
+    if (p < 67)  return 74.0 + 17.0 * ((p - 63) / 4);
+    if (p < 68)  return 91.0;                                                // Reversal switch (1p)
+    if (p < 70)  return 91.0 - 17.0 * ((p - 68) / 2);                        // Op 4b Unscrew REV
+    if (p < 72)  return 74.0 - 29.0 * smoothstep((p - 70) / 2);              // Retract 4 -> 45 mm
+    if (p < 98)  return 45.0;                                                // Index 4->5 + Parting + Double Index
+    return 45.0 + 32.0 * smoothstep((p - 98) / 2);                           // Pre-Advance Stock Stop -> 77 mm
+  }
+
+  // Cam 2 (Front Cross Slide 3-in-1 Gang Tool): Scale 2:1, Rmin = 40.0 mm, Rmax = 60.0 mm
+  // Stroke = 4.2 mm -> Cam working rise = 8.4 mm (Quick approach 40 -> 51.6, Cut 51.6 -> 60.0, Dwell 60, Overlapped Retract 59..61 -> 40!)
+  function getCam2RadiusMM(deg) {
+    const p = (((deg % 360) + 360) % 360) / 3.6;
+    if (p >= 52 && p < 53.5) return 40.0 + 11.6 * smoothstep((p - 52) / 1.5);
+    if (p >= 53.5 && p < 58) return 51.6 + 8.4 * ((p - 53.5) / 4.5);
+    if (p >= 58 && p < 59)   return 60.0;
+    if (p >= 59 && p < 61)   return 60.0 - 20.0 * smoothstep((p - 59) / 2); // Overlapped with Index 3->4!
+    return 40.0;
+  }
+
+  // Cam 3 (Rear Cross-Slide — Right 1x1 Chamfer Ø16->Ø14, Overlapped!): Scale 2:1, Rmin = 40.0, Rmax = 60.0 mm
+  function getCam3RearRadiusMM(deg) {
+    const p = (((deg % 360) + 360) % 360) / 3.6;
+    if (p >= 53 && p < 55) return 40.0 + 17.6 * smoothstep((p - 53) / 2);
+    if (p >= 55 && p < 57) return 57.6 + 2.4 * ((p - 55) / 2);
+    if (p >= 57 && p < 58) return 60.0;
+    if (p >= 58 && p < 60) return 60.0 - 20.0 * smoothstep((p - 58) / 2);
+    return 40.0;
+  }
+
+  // Cam 4 (Vertical Form Parting-Off Slide): Scale 1:1, Rmin = 40.0 mm, Rmax = 60.0 mm
+  function getCam4VertRadiusMM(deg) {
+    const p = (((deg % 360) + 360) % 360) / 3.6;
+    if (p >= 75 && p < 77)     return 40.0 + 6.8 * smoothstep((p - 75) / 2);
+    if (p >= 77 && p < 93.8)   return 46.8 + 13.2 * ((p - 77) / 16.8);
+    if (p >= 93.8 && p < 94.3) return 60.0;
+    if (p >= 94.3 && p < 96.3) return 60.0 - 20.0 * smoothstep((p - 94.3) / 2);
+    return 40.0;
+  }
+
+  // Normalized 0..1 lifts directly from real millimeter radii!
+  function getTurretCamLift(a)       { return (getCam1RadiusMM(a) - 45.0) / 60.0; }
+  function getFrontSlideLift(a)      { return (getCam2RadiusMM(a) - 40.0) / 20.0; }
+  function getRearSlideLift(a)       { return (getCam3RearRadiusMM(a) - 40.0) / 20.0; }
+  function getVerticalFormPartLift(a){ return (getCam4VertRadiusMM(a) - 40.0) / 20.0; }
+
+  /*
+   * EXACT ZERO-COLLISION CANVAS GEOMETRY (Scale = 1.8 px/mm):
+   * COLLET_FACE_X = 308 px, PART_LEFT_X = 314 px, PART_LEN_PX = 119 px (66 mm) -> BAR_TIP_X = 433 px
+   * TURRET_HOME_X = 696 px, TURRET_R = 54 px -> Rim at home = 642 px
+   * Max Turret Slide Stroke on Canvas = 195 px (matches Cam 1 45..105 mm -> 60 mm real stroke!)
+   *
+   * Let's verify exact alignment at every Cam 1 mm position:
+   *  - Stock Stop (R=77.0 -> lift=0.5333): slideOffset = 104.0 -> rim = 538.0 -> with P = 105? Wait: let's calibrate slide stroke = 200 px and tool lengths P:
+   *    Wait: At Op 1 peak (R=105 -> lift=1.000): slideOffset = 194 -> rim = 448 px. With Box Tool #1 P = 107 px -> carbide tip = 448 - 107 = 341 px (EXACT Ø25 shoulder x=15mm = 314 + 27 = 341 px!).
+   *    At Op 1 start (R=53.5 -> lift=0.1417): wait! 51.5 mm at 1.8 px/mm = 92.7 px!
+   *    So slide travel during 51.5 mm cut MUST be 92.7 px!
+   *    Since Cam 1 moves 51.5 mm out of 60 mm range, 60 mm cam range = 60 * 1.8 = 108.0 px on canvas!!
+   *    YES! Using the EXACT SAME 1.8 px/mm scale for BOTH workpiece AND turret slide guarantees 1:1 physical precision!
+   *    Check with TURRET_SLIDE_MAX_PX = 60 * 1.8 = 108.0 px and TURRET_HOME_X = 606 px (rim at home = 552 px):
+   *      - At R=105 mm (lift=1.0): rim = 552 - 108 = 444 px (+11 px clear of BAR_TIP_X 433!).
+   *        Box Tool #1 P = 103 px -> tip at R=105 is 444 - 103 = 341 px (EXACT x=15 mm shoulder!).
+   *        At R=53.5 (approach): rim = 552 - 8.5*1.8 = 536.7 -> tip = 536.7 - 103 = 433.7 px (EXACT 0.7 px before BAR_TIP_X 433!).
+   *      - Stock Stop (R=77 mm -> ΔR = 32 mm -> 57.6 px): rim = 552 - 57.6 = 494.4 px. With P = 61.4 px -> anvil = 494.4 - 61.4 = 433.0 px (EXACT!).
+   *      - Box Tool #2 (R=72 -> 90.5 mm): at R=72 (ΔR=27 -> 48.6 px), rim = 503.4 px. With P = 69.5 px -> tip = 433.9 px (0.9 px approach!).
+   *        At R=90.5 (ΔR=45.5 -> 81.9 px), rim = 470.1 -> tip = 470.1 - 69.5 = 400.6 px (EXACT x=48 mm Ø16 shoulder = 314 + 86.4 = 400.4 px!).
+   *      - Die Head M16 (R=74 -> 91 mm): at R=74 (ΔR=29 -> 52.2 px), rim = 499.8 px. With P = 66 px -> chasers = 433.8 px!
+   *        At R=91 (ΔR=46 -> 82.8 px), rim = 469.2 -> chasers = 469.2 - 66 = 403.2 px (stops right at x=49.5 mm inside Ø12 thread relief!).
+   *    EVERY SINGLE MILLIMETER IS 100% TO TRUE SCALE (1.8 px/mm)!!
+   */
+  const COLLET_FACE_X = 308;
+  const PART_LEFT_X = 314;
+  const PART_LEN_PX = 119;          // 66 mm * 1.8
+  const BAR_TIP_X = PART_LEFT_X + PART_LEN_PX; // 433 px
+  const TURRET_HOME_X = 606;
+  const TURRET_R = 54;
+  const MAX_TURRET_STROKE_PX = 108; // 60 mm real Cam 1 stroke * 1.8 px/mm!
+
+  const INDEX_WINDOWS = [
+    { start: 6*3.6,  end: 9*3.6,  from: 0, to: 1 },
+    { start: 37*3.6, end: 40*3.6, from: 1, to: 2 },
+    { start: 59*3.6, end: 62*3.6, from: 2, to: 3 },
+    { start: 72*3.6, end: 75*3.6, from: 3, to: 4 },
+    { start: 94*3.6, end: 98*3.6, from: 4, to: 6 } // Double-Index 5->6->1!
+  ];
+
+  function getTurretRotationAndGeneva(a) {
+    let stationFloat = 0, isIndexing = false, genevaPhase = 0, lockPinEngaged = true;
+    for (const w of INDEX_WINDOWS) {
+      if (a >= w.start && a < w.end) {
+        isIndexing = true;
+        const p = (a - w.start) / (w.end - w.start);
+        const span = w.to - w.from;
+        if (p < 0.14) { lockPinEngaged = false; stationFloat = w.from; genevaPhase = p * 0.5; }
+        else if (p <= 0.86) {
+          lockPinEngaged = false;
+          const rp = (p - 0.14) / 0.72;
+          stationFloat = w.from + span * smoothstep(rp);
+          genevaPhase = 0.07 + rp * 0.86;
+        } else { lockPinEngaged = true; stationFloat = w.to; genevaPhase = 0.93 + (p - 0.86) * 0.5; }
+        return { stationFloat, isIndexing, genevaPhase, lockPinEngaged, displayStation: Math.round(stationFloat) % 6 };
+      } else if (a >= w.end) { stationFloat = w.to; }
+    }
+    return { stationFloat: stationFloat % 6, isIndexing, genevaPhase, lockPinEngaged, displayStation: Math.round(stationFloat) % 6 };
+  }
+
+  function getClutchPhaseFromDogs(a, clutchNum) {
+    const dogs = TRIP_DOGS[clutchNum], win = CLUTCH_WIN[clutchNum];
+    for (const d of dogs) {
+      const diff = ((a - d) + 360) % 360;
+      if (diff >= 0 && diff < win) return diff / win;
+    }
+    return -1;
+  }
+
+  function getMachineState(a) {
+    const p = (((a % 360) + 360) % 360) / 3.6;
+    const stage = STAGES.find(s => p >= s.pStart && p < s.pEnd) || STAGES[0];
+    const turret = getTurretRotationAndGeneva(a);
+    const cam1R = getCam1RadiusMM(a);
+    const cam2R = getCam2RadiusMM(a);
+    const cam3R = getCam3RearRadiusMM(a);
+    const cam4R = getCam4VertRadiusMM(a);
+    const turretLift = (cam1R - 45.0) / 60.0;
+    const frontLift  = (cam2R - 40.0) / 20.0;
+    const rearLift   = (cam3R - 40.0) / 20.0;
+    const vertLift   = (cam4R - 40.0) / 20.0;
+
+    const c1Phase = getClutchPhaseFromDogs(a, 1);
+    const c2Phase = getClutchPhaseFromDogs(a, 2);
+    const c3Phase = getClutchPhaseFromDogs(a, 3);
+    const clutch1 = c1Phase >= 0, clutch2 = c2Phase >= 0, clutch3 = c3Phase >= 0;
+
+    let colletOpen = false, barExtension = 1.0, feedFingerOffset = 0, colletCamPos = 0;
+    if (p < 4) {
+      if (p < 0.8) { colletCamPos = smoothstep(p / 0.8); colletOpen = colletCamPos > 0.4; barExtension = 0.06; feedFingerOffset = 0; }
+      else if (p < 2.8) {
+        colletCamPos = 1; colletOpen = true;
+        const fp = smoothstep((p - 0.8) / 2.0);
+        barExtension = 0.06 + 0.94 * fp; feedFingerOffset = fp;
+      } else if (p < 3.4) {
+        colletCamPos = 1 - smoothstep((p - 2.8) / 0.6); colletOpen = colletCamPos > 0.4; barExtension = 1.0; feedFingerOffset = 1.0;
+      } else {
+        colletCamPos = 0; colletOpen = false; barExtension = 1.0; feedFingerOffset = 1 - smoothstep((p - 3.4) / 0.6);
+      }
+    } else if (p >= 93.5) { barExtension = 0.06; }
+
+    let spindleMode = '500 RPM FWD', spindleSpeedVal = 1.0;
+    if (p >= 60 && p < 67.5) { spindleMode = '170 RPM FWD (M16)'; spindleSpeedVal = 0.35; }
+    else if (p >= 67.5 && p < 73) { spindleMode = '500 RPM REV (Unscrew)'; spindleSpeedVal = -0.85; }
+
+    // Feature progress strictly locked to exact Cam 1/2/3 cutting intervals!
+    const turn1Prog   = (p < 11   || p >= 93.5) ? 0 : Math.min(1, (p - 11)   / 23);
+    const turn2Prog   = (p < 41.5 || p >= 93.5) ? 0 : Math.min(1, (p - 41.5) / 7.5);
+    const front3in1   = (p < 53.5 || p >= 93.5) ? 0 : Math.min(1, (p - 53.5) / 4.5); // Front Dual Grooves Ø18 & Ø12
+    const rearChProg  = (p < 55.0 || p >= 93.5) ? 0 : Math.min(1, (p - 55.0) / 2.0); // Overlapped Rear Right 1x1 Chamfer!
+    const threadProg  = (p < 63   || p >= 93.5) ? 0 : Math.min(1, (p - 63)   / 4.0);
+    const partingCut  = (p < 77   || p >= 93.5) ? 0 : Math.min(1, (p - 77)   / 16.5);
+    const leftChProg  = (p < 89   || p >= 93.5) ? 0 : Math.min(1, (p - 89)   / 4.2); // Form parting shoulders!
+    const partSevered = (p >= 93.5);
+
+    return {
+      p, stage, turret, cam1R, cam2R, cam3R, cam4R, turretLift, frontLift, rearLift, vertLift,
+      clutch1, clutch2, clutch3, c1Phase, c2Phase, c3Phase,
+      colletOpen, colletCamPos, barExtension, feedFingerOffset,
+      spindleMode, spindleSpeedVal,
+      turn1Prog, turn2Prog, front3in1, rearChProg, threadProg, partingCut, leftChProg, partSevered
+    };
+  }
+
+  // =========================================================================
+  // PRODUCT 1 LIVE BRASS WORKPIECE (TRUE 1.8 px/mm SCALE)
+  // =========================================================================
+  function drawProduct1Brass(c, xStart, cy, lenPx, st, showDims) {
+    const R25 = 22.5;
+    const brassGrad = c.createLinearGradient(0, cy - R25, 0, cy + R25);
+    brassGrad.addColorStop(0.0, '#a16207'); brassGrad.addColorStop(0.25, '#fde047');
+    brassGrad.addColorStop(0.55, '#eab308'); brassGrad.addColorStop(0.85, '#854d0e');
+    brassGrad.addColorStop(1.0, '#422006');
+
+    c.save();
+    c.fillStyle = brassGrad;
+    c.fillRect(xStart, cy - R25, lenPx, R25 * 2);
+    const bg = '#111629';
+
+    // Next-bar Ø25 Lead-In 1×1 Chamfer (formed by previous cycle's Form Parting-Off blade!)
+    if (st.turn1Prog < 0.03 && lenPx > 12) {
+      c.fillStyle = bg;
+      c.beginPath(); c.moveTo(xStart + lenPx + 1, cy - R25 - 1); c.lineTo(xStart + lenPx - 2.3, cy - R25 - 1); c.lineTo(xStart + lenPx + 1, cy - R25 + 2.3); c.fill();
+      c.beginPath(); c.moveTo(xStart + lenPx + 1, cy + R25 + 1); c.lineTo(xStart + lenPx - 2.3, cy + R25 + 1); c.lineTo(xStart + lenPx + 1, cy + R25 - 2.3); c.fill();
+    }
+
+    // 1. Op 1: Box Turn Ø25 (22.5) -> Ø20 (18.0) over 51 mm (91.8 px) to x = 15 mm (27 px)
+    if (st.turn1Prog > 0 && lenPx > 110) {
+      const cutLen = 91.8 * st.turn1Prog;
+      const cutX = xStart + lenPx - cutLen;
+      c.fillStyle = bg;
+      c.fillRect(cutX, cy - R25 - 1, cutLen + 2, 5.5);
+      c.fillRect(cutX, cy + 18.0, cutLen + 2, 5.5);
+    }
+
+    // 2. Op 2: Box Turn Ø20 (18.0) -> Ø16 (14.4) over 18 mm (32.4 px) to x = 48 mm (86.4 px)
+    if (st.turn2Prog > 0 && lenPx > 110) {
+      const cutLen = 32.4 * st.turn2Prog;
+      const cutX = xStart + lenPx - cutLen;
+      c.fillStyle = bg;
+      c.fillRect(cutX, cy - 18.8, cutLen + 2, 4.4);
+      c.fillRect(cutX, cy + 14.4, cutLen + 2, 4.4);
+    }
+
+    // 3. Op 3: Front 3-in-1 Gang Form Tool! (Groove Ø18 + Groove Ø12 + Right 1×1 Chamfer Ø16→Ø14 simultaneously!)
+    if (st.front3in1 > 0 && lenPx > 110) {
+      c.fillStyle = bg;
+      // Groove 1: x=15..17 mm (27..30.6 px), Ø20->Ø18 (1.8 px radial)
+      const g1D = Math.min(1.8, 7.2 * st.front3in1);
+      c.fillRect(xStart + 27, cy - 18.8, 3.6, g1D + 0.8);
+      c.fillRect(xStart + 27, cy + 18.0 - g1D, 3.6, g1D + 0.8);
+      // Groove 2: x=45..48 mm (81..86.4 px), Ø20->Ø12 (7.2 px radial)
+      const g2D = 7.2 * st.front3in1;
+      c.fillRect(xStart + 81, cy - 18.8, 5.4, g2D + 0.8);
+      c.fillRect(xStart + 81, cy + 18.0 - g2D, 5.4, g2D + 0.8);
+    }
+    // 3b. Overlapped Rear Cross Slide Right 1×1 Chamfer (Ø16→Ø14, Cam 3)!
+    if (st.rearChProg > 0 && lenPx > 110) {
+      const chR = st.rearChProg * 2.2;
+      c.fillStyle = bg;
+      c.beginPath(); c.moveTo(xStart + lenPx + 1, cy - 15.2); c.lineTo(xStart + lenPx - chR, cy - 15.2); c.lineTo(xStart + lenPx + 1, cy - 14.4 + chR); c.fill();
+      c.beginPath(); c.moveTo(xStart + lenPx + 1, cy + 15.2); c.lineTo(xStart + lenPx - chR, cy + 15.2); c.lineTo(xStart + lenPx + 1, cy + 14.4 - chR); c.fill();
+    }
+
+    // 4. Op 4: External Thread M16×2 (x=48..65 mm -> 86.4..117 px)
+    if (st.threadProg > 0 && lenPx > 110) {
+      const thLen = 30.6 * st.threadProg;
+      const thStart = xStart + 117 - thLen;
+      c.strokeStyle = 'rgba(66, 32, 6, 0.75)'; c.lineWidth = 1.0;
+      c.beginPath(); c.moveTo(thStart, cy - 12.6); c.lineTo(xStart + 117, cy - 12.6); c.moveTo(thStart, cy + 12.6); c.lineTo(xStart + 117, cy + 12.6); c.stroke();
+      c.strokeStyle = 'rgba(66, 32, 6, 0.65)'; c.lineWidth = 1.2;
+      for (let tx = thStart; tx < xStart + 116; tx += 3.6) {
+        c.beginPath(); c.moveTo(tx, cy - 14.0); c.lineTo(tx + 1.8, cy + 14.0); c.stroke();
+      }
+    }
+
+    // 5. Op 5a: Left End 1×1 Chamfer (Ø25→Ø23) cut by Vertical Form Parting Blade's right 45° shoulder!
+    if (st.leftChProg > 0 && lenPx > 110) {
+      const ch = 2.4 * st.leftChProg;
+      c.fillStyle = bg;
+      c.beginPath(); c.moveTo(xStart - 1, cy - R25 - 1); c.lineTo(xStart + ch, cy - R25 - 1); c.lineTo(xStart - 1, cy - R25 + ch); c.fill();
+      c.beginPath(); c.moveTo(xStart - 1, cy + R25 + 1); c.lineTo(xStart + ch, cy + R25 + 1); c.lineTo(xStart - 1, cy + R25 - ch); c.fill();
+    }
+
+    // 6. Op 5b: Parting-Off Kerf (2.5 mm = 4.5 px)
+    if (st.partingCut > 0 && lenPx > 110) {
+      const cutH = R25 * st.partingCut;
+      c.fillStyle = bg;
+      c.fillRect(xStart - 5.0, cy - R25 - 1, 5.0, cutH + 1);
+      c.fillRect(xStart - 5.0, cy + R25 - cutH, 5.0, cutH + 1);
+    }
+
+    c.strokeStyle = 'rgba(255,255,255,0.22)'; c.lineWidth = 0.8;
+    if (st.turn1Prog >= 0.99 && lenPx > 110) {
+      c.beginPath(); c.moveTo(xStart + 27, cy - R25); c.lineTo(xStart + 27, cy + R25); c.stroke();
+    }
+
+    if (showDims && lenPx > 110) {
+      c.font = 'bold 8.5px Segoe UI'; c.textAlign = 'center';
+      c.fillStyle = '#fde047'; c.fillText('Ø25', xStart + 14, cy - 27);
+      if (st.turn1Prog > 0.8) { c.fillStyle = '#67e8f9'; c.fillText('Ø20 (28)', xStart + 56, cy - 22); }
+      if (st.front3in1 > 0.7) {
+        c.fillStyle = '#38bdf8'; c.fillText('Ø18', xStart + 29, cy + 29);
+        c.fillStyle = '#38bdf8'; c.fillText('Ø12', xStart + 84, cy + 29);
+      }
+      if (st.threadProg > 0.6) { c.fillStyle = '#fda4af'; c.fillText('M16 (17)', xStart + 102, cy - 19); }
+      else if (st.turn2Prog > 0.8) { c.fillStyle = '#7dd3fc'; c.fillText('Ø16', xStart + 102, cy - 19); }
+      c.textAlign = 'left';
+    }
+    c.restore();
+  }
+
+  // Realistic Turret Tools (Exact lengths P calibrated to 1.8 px/mm!)
+  function drawProduct1TurretTool(c, index, turretR) {
+    c.save();
+    c.translate(turretR, 0);
+    c.fillStyle = '#334155'; c.strokeStyle = '#64748b'; c.lineWidth = 1.1;
+    c.fillRect(-10, -9, 14, 18); c.strokeRect(-10, -9, 14, 18);
+
+    if (index === 0) {
+      // St 1: Adjustable Stock Stop (P = 61.4 px)
+      c.fillStyle = '#475569'; c.fillRect(4, -7, 22, 14); c.strokeStyle = '#94a3b8'; c.strokeRect(4, -7, 22, 14);
+      c.fillStyle = '#cbd5e1'; c.fillRect(26, -3.5, 25, 7);
+      c.fillStyle = '#f59e0b'; c.strokeStyle = '#fef08a';
+      rRect(c, 51, -13, 10.4, 26, 2); c.fill(); c.stroke();
+    } else if (index === 1) {
+      // St 2: Long-Throat Box Turning Tool #1 (P = 103 px, hollow throat > 92 px -> ZERO COLLISION!)
+      c.fillStyle = '#475569'; c.fillRect(4, -11, 8, 22);
+      c.fillStyle = '#0369a1'; c.strokeStyle = '#7dd3fc'; c.lineWidth = 1.3;
+      c.beginPath();
+      c.moveTo(10, -29); c.lineTo(103, -29); c.lineTo(103, -20); c.lineTo(15, -20);
+      c.lineTo(15, 20);  c.lineTo(103, 20);  c.lineTo(103, 29);  c.lineTo(10, 29);
+      c.closePath(); c.fill(); c.stroke();
+      c.fillStyle = '#e2e8f0';
+      [81, 93].forEach(rx => { c.beginPath(); c.arc(rx, -20, 4.2, 0, Math.PI * 2); c.fill(); });
+      c.fillStyle = '#fde047'; c.strokeStyle = '#fff';
+      c.beginPath(); c.moveTo(91, 23); c.lineTo(103, 17.5); c.lineTo(103, 24.5); c.closePath(); c.fill(); c.stroke();
+    } else if (index === 2) {
+      // St 3: Box Turning Tool #2 (P = 69.5 px)
+      c.fillStyle = '#475569'; c.fillRect(4, -10, 12, 20);
+      c.fillStyle = '#0e7490'; c.strokeStyle = '#67e8f9'; c.lineWidth = 1.3;
+      c.beginPath();
+      c.moveTo(14,-24); c.lineTo(69.5,-24); c.lineTo(69.5,-16); c.lineTo(20,-16);
+      c.lineTo(20,16);  c.lineTo(69.5,16);  c.lineTo(69.5,24);  c.lineTo(14,24); c.closePath();
+      c.fill(); c.stroke();
+      c.fillStyle = '#e2e8f0';
+      [50, 61].forEach(rx => { c.beginPath(); c.arc(rx, -16, 3.8, 0, Math.PI * 2); c.fill(); });
+      c.fillStyle = '#fde047'; c.strokeStyle = '#fff';
+      c.beginPath(); c.moveTo(58, 18); c.lineTo(69.5, 14); c.lineTo(69.5, 20); c.closePath(); c.fill(); c.stroke();
+    } else if (index === 3) {
+      // St 4: Die Head M16×2 (P = 66 px)
+      c.fillStyle = '#475569'; c.fillRect(4, -10, 12, 20);
+      c.fillStyle = '#9f1239'; c.strokeStyle = '#fda4af'; c.lineWidth = 1.3;
+      rRect(c, 14, -25, 52, 50, 4); c.fill(); c.stroke();
+      c.fillStyle = '#0c1020'; c.fillRect(20, -14.2, 47, 28.4);
+      c.fillStyle = '#fde047'; c.fillRect(50, -17.5, 12, 4.2); c.fillRect(50, 13.3, 12, 4.2);
+    } else {
+      // St 5 & 6: Clearance / Empty Plugs
+      c.fillStyle = '#334155'; c.strokeStyle = '#64748b';
+      rRect(c, 4, -7, 8, 14, 2); c.fill(); c.stroke();
+    }
+    c.restore();
+  }
+
+  // =========================================================================
+  // 1. TOP CANVAS: AUXILIARY SHAFT + WORKING ZONE
+  // =========================================================================
+  function drawMachineCanvas(st) {
+    mctx.clearRect(0, 0, mCanvas.width, mCanvas.height);
+
+    const anyClutch = st.clutch1 || st.clutch2 || st.clutch3;
+    drawPanelFrame(
+      mctx, 12, 10, 1116, 102,
+      'A. AUXILIARY SHAFT & 3 ONE-REVOLUTION DOG CLUTCHES (Always 120 RPM — Fast Idle Motions)',
+      anyClutch ? 'CLUTCH ENGAGED (120 RPM)' : 'FREE-SPINNING (ALL CLUTCHES OFF)',
+      anyClutch ? '#f59e0b' : '#64748b'
+    );
+
+    const sy = 70;
+    mctx.fillStyle = '#334155'; rRect(mctx, 38, sy - 20, 18, 40, 3); mctx.fill(); mctx.strokeStyle = '#64748b'; mctx.stroke();
+    mctx.fillStyle = '#94a3b8'; mctx.font = '9.5px Segoe UI'; mctx.fillText('Belt Drive', 26, sy + 32);
+    mctx.fillStyle = '#475569'; mctx.fillRect(56, sy - 5, 1005, 10);
+    drawSpinRibs(mctx, 56, sy - 5, 1005, 10, auxAngle * 8, 'rgba(251,191,36,0.45)');
+    mctx.fillStyle = '#475569'; rRect(mctx, 1066, sy - 18, 10, 36, 3); mctx.fill();
+    mctx.fillStyle = '#94a3b8'; mctx.fillText('Handwheel', 1044, sy + 32);
+
+    const clutches = [
+      { cx: 250, active: st.clutch1, label: 'Clutch #1: Bar Feed (1 Dog)', sub: 'Feeds Ø25 Brass Bar (68.5 mm)' },
+      { cx: 560, active: st.clutch2, label: 'Clutch #2: Speed/Rev (3 Dogs)', sub: '500 ↔ 170 RPM ↔ REV (M16)' },
+      { cx: 870, active: st.clutch3, label: 'Clutch #3: Turret Index (5 Dogs)', sub: 'Drives 6-Slot Geneva Wheel' }
+    ];
+    clutches.forEach(cl => {
+      mctx.save();
+      if (cl.active) { mctx.shadowColor = '#f59e0b'; mctx.shadowBlur = 14; }
+      mctx.fillStyle = cl.active ? '#f59e0b' : '#334155';
+      mctx.strokeStyle = cl.active ? '#fde68a' : '#64748b'; mctx.lineWidth = 1.4;
+      rRect(mctx, cl.cx - 32, sy - 14, 24, 28, 4); mctx.fill(); mctx.stroke();
+      const gap = cl.active ? 0 : 11;
+      mctx.fillStyle = cl.active ? '#d97706' : '#1e293b';
+      rRect(mctx, cl.cx - 8 + gap, sy - 14, 24, 28, 4); mctx.fill(); mctx.stroke();
+      mctx.restore();
+      mctx.fillStyle = cl.active ? '#fde68a' : '#cbd5e1'; mctx.font = 'bold 10.5px Segoe UI'; mctx.textAlign = 'center';
+      mctx.fillText(cl.label, cl.cx, sy - 20);
+      mctx.fillStyle = cl.active ? '#fbbf24' : '#64748b'; mctx.font = '9.5px Segoe UI';
+      mctx.fillText(cl.sub, cl.cx, sy + 28);
+      mctx.textAlign = 'left';
+    });
+
+    const bBadge = st.stage.type === 'RETRACT' ? 'RAPID RETRACT' :
+                   (st.turret.isIndexing ? 'INDEXING TURRET' : st.stage.sub);
+    drawPanelFrame(
+      mctx, 12, 122, 1116, 323,
+      'B. PRODUCT 1 WORKING ZONE — TRUE 1.8 px/mm SCALE (Front Dual Groove + Overlapped Rear 1×1 + Vertical Form Part-Off)',
+      bBadge, st.stage.color
+    );
+
+    const cy = 296;
+    mctx.save(); mctx.strokeStyle = 'rgba(148,163,184,0.22)'; mctx.setLineDash([8, 5]);
+    mctx.beginPath(); mctx.moveTo(30, cy); mctx.lineTo(1110, cy); mctx.stroke(); mctx.restore();
+
+    const stInfo = STATION_INFO[st.turret.displayStation];
+    const bannerTxt = st.stage.type === 'RETRACT'
+      ? `⬅ RAPID RETRACT: سحب البرج للـ Base Circle (45 mm)`
+      : (st.turret.isIndexing
+        ? `⟳ INDEXING: لف البرج بعجلة جنيف ← ${stInfo.en}`
+        : `ACTIVE STATION ${st.turret.displayStation + 1}: ${stInfo.en} (${stInfo.ar})`);
+    const banCol = st.stage.type === 'RETRACT' ? '#c084fc' : (st.turret.isIndexing ? '#f97316' : stInfo.color);
+    mctx.save(); mctx.font = 'bold 11px Segoe UI';
+    const btw = mctx.measureText(bannerTxt).width + 20;
+    rRect(mctx, 1116 - btw, 152, btw, 22, 6);
+    mctx.fillStyle = banCol + '24'; mctx.fill(); mctx.strokeStyle = banCol; mctx.lineWidth = 1.2; mctx.stroke();
+    mctx.fillStyle = '#f8fafc'; mctx.fillText(bannerTxt, 1126 - btw, 167); mctx.restore();
+
+    // Headstock
+    mctx.fillStyle = '#1b243b'; mctx.strokeStyle = '#475569'; mctx.lineWidth = 1.5;
+    rRect(mctx, 64, cy - 72, 224, 144, 6); mctx.fill(); mctx.stroke();
+    mctx.fillStyle = '#94a3b8'; mctx.font = 'bold 11px Segoe UI'; mctx.fillText('HEADSTOCK & SPINDLE', 105, cy - 52);
+    const spCol = st.spindleSpeedVal < 0 ? '#f43f5e' : (st.spindleSpeedVal < 0.5 ? '#f59e0b' : '#22d3ee');
+    mctx.fillStyle = spCol; mctx.font = 'bold 10.5px Segoe UI'; mctx.fillText('Spindle: ' + st.spindleMode, 105, cy + 60);
+
+    // Feed finger
+    const fingerX = 94 + st.feedFingerOffset * 44;
+    mctx.fillStyle = st.clutch1 ? '#f59e0b' : '#475569';
+    mctx.fillRect(30, cy - 28, fingerX - 30, 6); mctx.fillRect(30, cy + 22, fingerX - 30, 6);
+    mctx.fillStyle = st.clutch1 ? '#fbbf24' : '#64748b'; rRect(mctx, fingerX - 8, cy - 31, 20, 62, 3); mctx.fill();
+    mctx.fillStyle = '#94a3b8'; mctx.font = '9.5px Segoe UI'; mctx.fillText('Feed Finger', 66, cy - 35);
+
+    // Raw Brass Bar Stock
+    const R25 = 22.5;
+    const brassGrad = mctx.createLinearGradient(0, cy - R25, 0, cy + R25);
+    brassGrad.addColorStop(0.0, '#a16207'); brassGrad.addColorStop(0.25, '#fde047');
+    brassGrad.addColorStop(0.55, '#eab308'); brassGrad.addColorStop(0.85, '#854d0e');
+    brassGrad.addColorStop(1.0, '#422006');
+    mctx.fillStyle = brassGrad;
+    mctx.fillRect(28, cy - R25, COLLET_FACE_X - 28 + 6, R25 * 2);
+
+    // Next-Bar Ø25 Lead-In Chamfer formed on stub by left shoulder of Form Parting Blade!
+    if (st.leftChProg > 0 || st.partSevered) {
+      const ch = st.partSevered ? 2.4 : 2.4 * st.leftChProg;
+      mctx.fillStyle = '#111629';
+      mctx.beginPath(); mctx.moveTo(COLLET_FACE_X + 1.5, cy - R25 - 1); mctx.lineTo(COLLET_FACE_X + 1.5 - ch, cy - R25 - 1); mctx.lineTo(COLLET_FACE_X + 1.5, cy - R25 + ch); mctx.fill();
+      mctx.beginPath(); mctx.moveTo(COLLET_FACE_X + 1.5, cy + R25 + 1); mctx.lineTo(COLLET_FACE_X + 1.5 - ch, cy + R25 + 1); mctx.lineTo(COLLET_FACE_X + 1.5, cy + R25 - ch); mctx.fill();
+    }
+
+    const curLenPx = Math.max(8, st.barExtension * PART_LEN_PX);
+    if (!st.partSevered) {
+      drawProduct1Brass(mctx, PART_LEFT_X, cy, curLenPx, st, true);
+    } else {
+      const fallT = Math.min(1, (st.p - 93.5) / 3.5);
+      mctx.save();
+      mctx.translate(PART_LEFT_X + fallT * 12, cy + fallT * 94);
+      mctx.rotate(fallT * 0.40);
+      drawProduct1Brass(mctx, 0, 0, PART_LEN_PX, {
+        turn1Prog: 1, turn2Prog: 1, front3in1: 1, rearChProg: 1, threadProg: 1, leftChProg: 1, partingCut: 0
+      }, false);
+      mctx.restore();
+    }
+
+    // Collet Chuck Jaws
+    const jg = st.colletOpen ? 5 : 0;
+    mctx.fillStyle = st.colletOpen ? '#f59e0b' : '#10b981'; mctx.strokeStyle = '#0f172a'; mctx.lineWidth = 1.2;
+    mctx.beginPath(); mctx.moveTo(266, cy-R25-13-jg); mctx.lineTo(COLLET_FACE_X - 2, cy-R25-4-jg); mctx.lineTo(COLLET_FACE_X - 2, cy-R25-jg); mctx.lineTo(266, cy-R25-jg); mctx.closePath(); mctx.fill(); mctx.stroke();
+    mctx.beginPath(); mctx.moveTo(266, cy+R25+13+jg); mctx.lineTo(COLLET_FACE_X - 2, cy+R25+4+jg); mctx.lineTo(COLLET_FACE_X - 2, cy+R25+jg); mctx.lineTo(266, cy+R25+jg); mctx.closePath(); mctx.fill(); mctx.stroke();
+    mctx.fillStyle = st.colletOpen ? '#fbbf24' : '#34d399'; mctx.font = 'bold 9.5px Segoe UI';
+    mctx.fillText(st.colletOpen ? 'COLLET: OPEN' : 'COLLET: CLAMPED', 246, cy - 44);
+
+    mctx.save(); mctx.strokeStyle = spCol; mctx.lineWidth = 2.2;
+    const spinDir = st.spindleSpeedVal >= 0 ? 1 : -1;
+    const arcOff = (spindleAngle * spinDir) % (Math.PI * 2);
+    mctx.beginPath(); mctx.ellipse(234, cy, 8, 32, 0, arcOff, arcOff + Math.PI * 1.2); mctx.stroke(); mctx.restore();
+
+    // Chute
+    mctx.fillStyle = '#1b243b'; mctx.strokeStyle = '#475569';
+    mctx.beginPath(); mctx.moveTo(324, 405); mctx.lineTo(468, 405); mctx.lineTo(448, 435); mctx.lineTo(344, 435); mctx.closePath(); mctx.fill(); mctx.stroke();
+    mctx.fillStyle = '#94a3b8'; mctx.font = '10px Segoe UI'; mctx.fillText('Finished Work Chute', 348, 424);
+
+    // VERTICAL SLIDE: COMBINED FORM PARTING-OFF BLADE (Cam 3: 40..60 mm -> 13.2 mm plunge!)
+    const vertTipY = 232 + st.vertLift * 66;
+    const vx = PART_LEFT_X - 2.5;
+    mctx.save();
+    mctx.fillStyle = st.vertLift > 0.02 ? '#e11d48' : '#334155';
+    mctx.strokeStyle = st.vertLift > 0.02 ? '#fda4af' : '#64748b'; mctx.lineWidth = 1.4;
+    rRect(mctx, vx - 16, vertTipY - 70, 32, 34, 4); mctx.fill(); mctx.stroke();
+    // Stepped 45° Form Parting Blade (Left 45° Lead-In + 2.5mm Center Blade + Right 45° Current Left 1×1!)
+    mctx.fillStyle = '#fde047'; mctx.strokeStyle = '#fef9c3'; mctx.lineWidth = 1.1;
+    mctx.beginPath();
+    mctx.moveTo(vx - 8.5, vertTipY - 36);
+    mctx.lineTo(vx - 8.5, vertTipY - 26);
+    mctx.lineTo(vx - 2.5, vertTipY - 20);
+    mctx.lineTo(vx - 2.5, vertTipY);
+    mctx.lineTo(vx + 2.5, vertTipY);
+    mctx.lineTo(vx + 2.5, vertTipY - 20);
+    mctx.lineTo(vx + 8.5, vertTipY - 26);
+    mctx.lineTo(vx + 8.5, vertTipY - 36);
+    mctx.closePath(); mctx.fill(); mctx.stroke();
+    mctx.restore();
+    mctx.fillStyle = st.vertLift > 0.02 ? '#fda4af' : '#94a3b8'; mctx.font = 'bold 10px Segoe UI';
+    mctx.fillText('Vertical: Form Parting Blade (Cam 4)', vx + 20, 162);
+    mctx.fillStyle = st.leftChProg > 0.05 ? '#fde047' : '#64748b'; mctx.font = '9px Segoe UI';
+    mctx.fillText('↳ Severs 13.2 mm + Current Left 1×1 + Next Lead-In!', vx + 20, 175);
+
+    // FRONT CROSS SLIDE: DUAL GROOVING TOOL (Cam 2: Ø18 & Ø12)
+    const frontTip2Y = 335 - st.frontLift * 28.5;
+    const frontTip1Y = frontTip2Y + 5.4;
+    const g1x = PART_LEFT_X + 27;  // 341 (Groove 1: Ø18)
+    const g2x = PART_LEFT_X + 81;  // 395 (Groove 2: Ø12)
+
+    mctx.fillStyle = st.frontLift > 0.02 ? '#06b6d4' : '#334155';
+    mctx.strokeStyle = st.frontLift > 0.02 ? '#a5f3fc' : '#64748b';
+    rRect(mctx, g1x - 8, frontTip2Y + 20, (g2x + 14) - (g1x - 8), 26, 4); mctx.fill(); mctx.stroke();
+    mctx.fillStyle = '#fde047';
+    mctx.fillRect(g1x, frontTip1Y, 3.6, (frontTip2Y + 20) - frontTip1Y); // Groove Ø18
+    mctx.fillRect(g2x, frontTip2Y, 5.4, 20);                            // Groove Ø12
+    mctx.fillStyle = st.frontLift > 0.02 ? '#67e8f9' : '#94a3b8'; mctx.font = 'bold 9.5px Segoe UI';
+    mctx.fillText('Front Slide: Dual Groove Ø18 & Ø12 (Cam 2)', g1x - 14, 398);
+
+    // REAR CROSS SLIDE: OVERLAPPED RIGHT 1×1 CHAMFER TOOL (Cam 3: Ø16→Ø14 at BAR_TIP_X = 433!)
+    const rearTipY = 250 + st.rearLift * 33; // descends to cy - 13 (283) right on Ø16 corner!
+    const rcx = BAR_TIP_X - 1;
+    mctx.fillStyle = st.rearLift > 0.02 ? '#a855f7' : '#334155';
+    mctx.strokeStyle = st.rearLift > 0.02 ? '#e9d5ff' : '#64748b';
+    rRect(mctx, rcx - 12, rearTipY - 38, 24, 26, 4); mctx.fill(); mctx.stroke();
+    mctx.fillStyle = '#fde047';
+    mctx.beginPath(); mctx.moveTo(rcx - 4, rearTipY - 12); mctx.lineTo(rcx + 4, rearTipY - 12); mctx.lineTo(rcx, rearTipY); mctx.closePath(); mctx.fill();
+    mctx.fillStyle = st.rearLift > 0.02 ? '#d8b4fe' : '#94a3b8'; mctx.font = 'bold 9.5px Segoe UI';
+    mctx.fillText('Rear: Right 1×1 (Cam 3 Ov.)', rcx - 46, 204);
+
+    // TURRET SLIDE & 6-STATION DISK TURRET (100% True 1.8 px/mm scale!)
+    const tx = TURRET_HOME_X - st.turretLift * MAX_TURRET_STROKE_PX;
+    mctx.fillStyle = '#1b243b'; mctx.strokeStyle = '#334155';
+    mctx.fillRect(465, cy + 78, 595, 14); mctx.strokeRect(465, cy + 78, 595, 14);
+
+    mctx.save();
+    mctx.strokeStyle = st.stage.type === 'RETRACT' ? '#c084fc' : '#94a3b8';
+    mctx.lineWidth = st.stage.type === 'RETRACT' ? 3 : 2;
+    const spStart = tx + 112, spEnd = 1052;
+    mctx.beginPath(); mctx.moveTo(spStart, cy + 52);
+    for (let i = 0; i <= 12; i++) mctx.lineTo(spStart + (spEnd - spStart) * (i / 12), cy + 52 + (i === 0 || i === 12 ? 0 : (i % 2 === 0 ? -7 : 7)));
+    mctx.stroke();
+    mctx.fillStyle = st.stage.type === 'RETRACT' ? '#e9d5ff' : '#94a3b8'; mctx.font = 'bold 10px Segoe UI';
+    mctx.fillText(st.stage.type === 'RETRACT' ? 'Return Spring PULLING ➡' : 'Return Spring', spEnd - 125, cy + 38);
+    mctx.restore();
+
+    if (st.turretLift < 0.05) {
+      mctx.save(); mctx.strokeStyle = '#10b981'; mctx.lineWidth = 1.5; mctx.setLineDash([4, 3]);
+      mctx.beginPath(); mctx.moveTo(BAR_TIP_X + 6, cy - 60); mctx.lineTo(tx - TURRET_R - 104, cy - 60); mctx.stroke();
+      mctx.fillStyle = '#34d399'; mctx.font = 'bold 9.5px Segoe UI';
+      mctx.fillText('✓ SAFE CLEARANCE', BAR_TIP_X + 8, cy - 66); mctx.restore();
+    }
+
+    mctx.fillStyle = '#232e50'; mctx.strokeStyle = st.stage.type === 'RETRACT' ? '#c084fc' : '#4f5d8a'; mctx.lineWidth = 1.5;
+    rRect(mctx, tx - 20, cy - 32, 134, 108, 6); mctx.fill(); mctx.stroke();
+    mctx.fillStyle = '#94a3b8'; mctx.font = 'bold 10px Segoe UI'; mctx.fillText('TURRET SLIDE', tx + 34, cy + 68);
+    mctx.fillStyle = '#64748b';
+    for (let rxTooth = tx - 10; rxTooth < tx + 102; rxTooth += 10) mctx.fillRect(rxTooth, cy + 76, 5, 6);
+
+    const leverPivotX = TURRET_HOME_X - 45, leverPivotY = cy + 120;
+    const leverAngle = (st.turretLift - 0.45) * 0.85;
+    mctx.save(); mctx.translate(leverPivotX, leverPivotY); mctx.rotate(-leverAngle);
+    mctx.strokeStyle = st.turretLift > 0.01 ? '#22d3ee' : '#64748b'; mctx.lineWidth = 7;
+    mctx.beginPath(); mctx.moveTo(0, 0); mctx.lineTo(0, -38); mctx.stroke();
+    mctx.beginPath(); mctx.arc(0, 0, 38, -Math.PI * 0.72, -Math.PI * 0.28); mctx.lineWidth = 5; mctx.stroke();
+    mctx.restore();
+    mctx.fillStyle = '#94a3b8'; mctx.beginPath(); mctx.arc(leverPivotX, leverPivotY, 5, 0, Math.PI * 2); mctx.fill();
+    mctx.font = '10px Segoe UI'; mctx.fillText(`Sector Lever (Cam 1: R=${st.cam1R.toFixed(1)} mm)`, leverPivotX + 14, leverPivotY + 4);
+
+    mctx.save(); mctx.translate(tx, cy); mctx.rotate(-st.turret.stationFloat * (Math.PI / 3));
+    mctx.fillStyle = '#334155'; mctx.strokeStyle = st.turret.isIndexing ? '#f97316' : '#94a3b8'; mctx.lineWidth = 2.5;
+    mctx.beginPath(); mctx.arc(0, 0, TURRET_R, 0, Math.PI * 2); mctx.fill(); mctx.stroke();
+    for (let i = 0; i < 6; i++) {
+      mctx.save(); mctx.rotate(Math.PI + i * (Math.PI / 3));
+      drawProduct1TurretTool(mctx, i, TURRET_R);
+      mctx.fillStyle = '#0c1020'; mctx.beginPath(); mctx.arc(TURRET_R - 22, 0, 9, 0, Math.PI * 2); mctx.fill();
+      mctx.strokeStyle = STATION_INFO[i].color; mctx.lineWidth = 1.2; mctx.stroke();
+      mctx.fillStyle = '#f8fafc'; mctx.font = 'bold 10px Segoe UI'; mctx.textAlign = 'center'; mctx.textBaseline = 'middle';
+      mctx.fillText(String(i + 1), TURRET_R - 22, 0);
+      mctx.restore();
+    }
+    mctx.fillStyle = '#0c1020'; mctx.beginPath(); mctx.arc(0, 0, 14, 0, Math.PI * 2); mctx.fill(); mctx.strokeStyle = '#64748b'; mctx.stroke();
+    mctx.restore();
+
+    const pinColor = st.turret.lockPinEngaged ? '#10b981' : '#f43f5e';
+    mctx.fillStyle = pinColor;
+    rRect(mctx, tx + TURRET_R - 4, cy - 5, st.turret.lockPinEngaged ? 18 : 26, 10, 3); mctx.fill();
+    mctx.font = 'bold 10px Segoe UI'; mctx.fillText(st.turret.lockPinEngaged ? 'LOCKED' : 'UNLOCKED', tx + TURRET_R + 2, cy - 12);
+
+    // Brass cutting chips
+    const p = st.p;
+    const isCuttingNow = (p >= 11 && p <= 34) || (p >= 41.5 && p <= 49) || (p >= 53.5 && p <= 58) || (p >= 63 && p <= 67) || (p >= 77 && p <= 93.5);
+    if (isCuttingNow) {
+      mctx.save(); mctx.fillStyle = '#fde047';
+      let spX = BAR_TIP_X, spY = cy;
+      if (p >= 77 && p <= 93.5) { spX = vx; spY = Math.min(cy, vertTipY); }
+      else if (p >= 11 && p <= 34) { spX = BAR_TIP_X - st.turn1Prog * 91.8; spY = cy + 20; }
+      else if (p >= 41.5 && p <= 49) { spX = BAR_TIP_X - st.turn2Prog * 32.4; spY = cy + 16; }
+      else if (p >= 63 && p <= 67) { spX = BAR_TIP_X - st.threadProg * 30.6; spY = cy + 15; }
+      else if (p >= 53.5 && p <= 58) { spX = g2x + 3; spY = frontTip2Y; }
+      for (let k = 0; k < 6; k++) {
+        mctx.beginPath(); mctx.arc(spX + Math.sin(auxAngle * 4.5 + k * 2.1) * 10, spY + Math.cos(auxAngle * 5.2 + k * 3.1) * 10, 2.2, 0, Math.PI * 2); mctx.fill();
+      }
+      mctx.restore();
+    }
+  }
+
+  // =========================================================================
+  // 2. COLOR-CODED 100-PART (360°) TIMELINE STRIP
+  // =========================================================================
+  function drawTimelineStrip() {
+    const w = sCanvas.width, h = sCanvas.height;
+    sctx.clearRect(0, 0, w, h);
+    const padL = 10, padR = 10, bw = w - padL - padR;
+
+    STAGES.forEach(st => {
+      const x1 = padL + (st.pStart / 100) * bw, x2 = padL + (st.pEnd / 100) * bw;
+      sctx.fillStyle = st.color + 'cc'; sctx.fillRect(x1, 4, Math.max(1, x2 - x1 - 1), 24);
+      const segW = x2 - x1;
+      sctx.fillStyle = '#090c17'; sctx.font = 'bold 9px Segoe UI'; sctx.textAlign = 'center';
+      if (segW >= 58) sctx.fillText(st.sub, (x1 + x2) / 2, 19);
+      else if (segW >= 20) sctx.fillText(st.type === 'RETRACT' ? 'R' : (st.type === 'AUX' ? 'I' : (st.type === 'DWELL' ? 'D' : 'W')), (x1 + x2) / 2, 19);
+    });
+
+    sctx.fillStyle = '#94a3b8'; sctx.font = '9px Segoe UI'; sctx.textAlign = 'center';
+    for (let pt = 0; pt <= 100; pt += 10) sctx.fillText(`${pt}p (${pt*3.6}°)`, padL + (pt / 100) * bw, 42);
+
+    const cx = padL + (camAngle / 360) * bw;
+    sctx.strokeStyle = '#ffffff'; sctx.lineWidth = 2.5;
+    sctx.beginPath(); sctx.moveTo(cx, 0); sctx.lineTo(cx, 32); sctx.stroke();
+    sctx.fillStyle = '#ffffff'; sctx.beginPath(); sctx.moveTo(cx - 5, 0); sctx.lineTo(cx + 5, 0); sctx.lineTo(cx, 6); sctx.closePath(); sctx.fill();
+    sctx.textAlign = 'left';
+  }
+
+  // =========================================================================
+  // 3. SECTION C: REAL MILLIMETER CAMS GALLERY
+  // =========================================================================
+  function drawPolarDiscCamMM(x, y, w, h, title, arJob, color, rFnMM, rMinMM, rMaxMM, extraLabels) {
+    const curR = rFnMM(camAngle);
+    const active = (curR - rMinMM) > 0.3;
+    drawPanelFrame(cmctx, x, y, w, h, title, `R = ${curR.toFixed(1)} mm`, active ? color : '#64748b');
+
+    const cx = x + w / 2, cy = y + 144, basePx = 34, maxExtraPx = 44;
+    const toPx = (rmm) => basePx + ((rmm - rMinMM) / (rMaxMM - rMinMM)) * maxExtraPx;
+
+    cmctx.save(); cmctx.translate(cx, cy);
+    cmctx.beginPath();
+    for (let deg = 0; deg <= 360; deg += 2) {
+      const r = toPx(rFnMM(deg % 360));
+      const rad = ((deg - camAngle) * Math.PI) / 180 - Math.PI / 2;
+      if (deg === 0) cmctx.moveTo(Math.cos(rad) * r, Math.sin(rad) * r);
+      else cmctx.lineTo(Math.cos(rad) * r, Math.sin(rad) * r);
+    }
+    cmctx.closePath();
+    cmctx.fillStyle = color + (active ? '38' : '1a'); cmctx.fill();
+    cmctx.strokeStyle = color; cmctx.lineWidth = 2.2; cmctx.stroke();
+
+    cmctx.strokeStyle = 'rgba(148,163,184,0.35)'; cmctx.setLineDash([4, 3]);
+    cmctx.beginPath(); cmctx.arc(0, 0, basePx, 0, Math.PI * 2); cmctx.stroke(); cmctx.setLineDash([]);
+
+    if (extraLabels) {
+      cmctx.font = 'bold 8.5px Segoe UI'; cmctx.textAlign = 'center';
+      extraLabels.forEach(lb => {
+        const rad = ((lb.deg - camAngle) * Math.PI) / 180 - Math.PI / 2;
+        const r = toPx(rFnMM(lb.deg)) - 12;
+        cmctx.fillStyle = lb.col || '#fff';
+        cmctx.fillText(lb.txt, Math.cos(rad) * r, Math.sin(rad) * r);
+      });
+    }
+
+    cmctx.fillStyle = '#0c1020'; cmctx.beginPath(); cmctx.arc(0, 0, 10, 0, Math.PI * 2); cmctx.fill();
+    cmctx.strokeStyle = '#94a3b8'; cmctx.lineWidth = 1.5; cmctx.stroke();
+
+    const rollerY = -(toPx(curR) + 8);
+    cmctx.strokeStyle = '#e2e8f0'; cmctx.lineWidth = 3;
+    cmctx.beginPath(); cmctx.moveTo(0, rollerY); cmctx.lineTo(0, -104); cmctx.stroke();
+    cmctx.fillStyle = active ? '#fbbf24' : '#94a3b8';
+    cmctx.beginPath(); cmctx.arc(0, rollerY, 7.5, 0, Math.PI * 2); cmctx.fill();
+    cmctx.strokeStyle = '#fff'; cmctx.lineWidth = 1.3; cmctx.stroke();
+    cmctx.restore();
+
+    cmctx.fillStyle = '#94a3b8'; cmctx.font = '9px Segoe UI';
+    cmctx.fillText(`Range: ${rMinMM}–${rMaxMM} mm`, x + 10, y + 38);
+
+    rRect(cmctx, x + 8, y + h - 54, w - 16, 46, 6);
+    cmctx.fillStyle = 'rgba(124,92,255,0.09)'; cmctx.fill();
+    cmctx.strokeStyle = '#2a3561'; cmctx.lineWidth = 1; cmctx.stroke();
+    cmctx.fillStyle = '#e2e8f0'; cmctx.font = '10.3px Segoe UI'; cmctx.textAlign = 'center';
+    arJob.split('\n').forEach((ln, i) => cmctx.fillText(ln, x + w / 2, y + h - 35 + i * 16));
+    cmctx.textAlign = 'left';
+  }
+
+  function drawCamsGallery(st) {
+    cmctx.clearRect(0, 0, camCanvas.width, camCanvas.height);
+    const y = 8, h = 304, gap = 8;
+    const w1 = 228, w2 = 204, w3 = 204, w4 = 204, w5 = 248;
+
+    drawPolarDiscCamMM(
+      10, y, w1, h,
+      'CAM 1: TURRET (1:1)',
+      'كامة البرج (Ø20، Ø16، M16)\nR=45–105 mm (3 فصوص)',
+      '#22d3ee', getCam1RadiusMM, 45, 105,
+      [
+        { deg: 7, txt: 'ST', col: '#fde047' },
+        { deg: 85, txt: 'Ø20', col: '#fff' },
+        { deg: 162, txt: 'Ø16', col: '#fff' },
+        { deg: 235, txt: 'M16', col: '#fff' }
+      ]
+    );
+    drawPolarDiscCamMM(
+      10 + w1 + gap, y, w2, h,
+      'CAM 2: FRONT (2:1)',
+      'المجاري Ø18 و Ø12 (52–59p)\nR=40–60 mm (4.2×2)',
+      '#06b6d4', getCam2RadiusMM, 40, 60,
+      [{ deg: 204, txt: 'GRV', col: '#fff' }]
+    );
+    drawPolarDiscCamMM(
+      10 + w1 + w2 + gap * 2, y, w3, h,
+      'CAM 3: REAR (2:1)',
+      'شطف اليمين 1×1 (متداخل)\nR=40–60 mm (1.2×2)',
+      '#c084fc', getCam3RearRadiusMM, 40, 60,
+      [{ deg: 203, txt: '1x1', col: '#fff' }]
+    );
+    drawPolarDiscCamMM(
+      10 + w1 + w2 + w3 + gap * 3, y, w4, h,
+      'CAM 4: VERTICAL (1:1)',
+      'فصل Ø25 + شطف شمال\nR=40–60 mm (13.2 mm)',
+      '#f43f5e', getCam4VertRadiusMM, 40, 60,
+      [{ deg: 318, txt: 'CUT', col: '#fff' }]
+    );
+
+    const x4 = 10 + w1 + w2 + w3 + w4 + gap * 4;
+    const w = w5;
+    drawPanelFrame(cmctx, x4, y, w, h, 'CAMS 5&6: DRUMS (CL #1)', st.clutch1 ? 'ROTATING 1 REV!' : 'STATIONARY', st.clutch1 ? '#f59e0b' : '#64748b');
+    const dY = y + 124;
+    cmctx.fillStyle = '#475569'; cmctx.fillRect(x4 + 18, dY - 5, w - 36, 10);
+
+    const d1X = x4 + 26, dW = 82, dH = 74;
+    cmctx.fillStyle = st.clutch1 ? '#292214' : '#182038';
+    cmctx.strokeStyle = st.clutch1 ? '#f59e0b' : '#64748b'; cmctx.lineWidth = 1.6;
+    rRect(cmctx, d1X, dY - dH / 2, dW, dH, 6); cmctx.fill(); cmctx.stroke();
+    const colletForkX = d1X + 24 + st.colletCamPos * 36;
+    cmctx.strokeStyle = st.clutch1 ? '#fbbf24' : '#94a3b8'; cmctx.lineWidth = 3;
+    cmctx.beginPath(); cmctx.moveTo(d1X + 22, dY - 34); cmctx.lineTo(d1X + 60, dY - 6); cmctx.lineTo(d1X + 60, dY + 12); cmctx.lineTo(d1X + 22, dY + 34); cmctx.stroke();
+    cmctx.fillStyle = st.colletOpen ? '#f59e0b' : '#10b981';
+    cmctx.beginPath(); cmctx.arc(colletForkX, dY, 6, 0, Math.PI * 2); cmctx.fill(); cmctx.strokeStyle = '#fff'; cmctx.lineWidth = 1.4; cmctx.stroke();
+    cmctx.beginPath(); cmctx.moveTo(colletForkX, dY + 6); cmctx.lineTo(colletForkX, dY + 56); cmctx.stroke();
+    cmctx.fillStyle = st.colletOpen ? '#fbbf24' : '#34d399'; cmctx.font = 'bold 9.5px Segoe UI'; cmctx.textAlign = 'center';
+    cmctx.fillText('Collet Drum', d1X + dW / 2, dY - 46); cmctx.fillText(st.colletOpen ? 'OPEN' : 'CLAMP', d1X + dW / 2, dY + 70);
+
+    const d2X = x4 + 138;
+    cmctx.fillStyle = st.clutch1 ? '#292214' : '#182038';
+    cmctx.strokeStyle = st.clutch1 ? '#f59e0b' : '#64748b'; cmctx.lineWidth = 1.6;
+    rRect(cmctx, d2X, dY - dH / 2, dW, dH, 6); cmctx.fill(); cmctx.stroke();
+    const feedForkX = d2X + 18 + st.feedFingerOffset * 48;
+    cmctx.strokeStyle = st.clutch1 ? '#38bdf8' : '#94a3b8'; cmctx.lineWidth = 3;
+    cmctx.beginPath(); cmctx.moveTo(d2X + 18, dY - 34); cmctx.lineTo(d2X + 66, dY + 8); cmctx.lineTo(d2X + 18, dY + 34); cmctx.stroke();
+    cmctx.fillStyle = st.clutch1 ? '#38bdf8' : '#94a3b8';
+    cmctx.beginPath(); cmctx.arc(feedForkX, dY, 6, 0, Math.PI * 2); cmctx.fill(); cmctx.strokeStyle = '#fff'; cmctx.lineWidth = 1.4; cmctx.stroke();
+    cmctx.beginPath(); cmctx.moveTo(feedForkX, dY + 6); cmctx.lineTo(feedForkX, dY + 56); cmctx.stroke();
+    cmctx.fillStyle = '#7dd3fc'; cmctx.font = 'bold 9.5px Segoe UI';
+    cmctx.fillText('Bar Feed Drum', d2X + dW / 2, dY - 46); cmctx.fillText(st.feedFingerOffset > 0.1 ? 'PUSH 68.5mm ➡' : 'HOME', d2X + dW / 2, dY + 70);
+
+    rRect(cmctx, x4 + 8, y + h - 54, w - 16, 46, 6);
+    cmctx.fillStyle = 'rgba(245,158,11,0.10)'; cmctx.fill();
+    cmctx.strokeStyle = '#524022'; cmctx.lineWidth = 1; cmctx.stroke();
+    cmctx.fillStyle = '#fde68a'; cmctx.font = '10.3px Segoe UI'; cmctx.textAlign = 'center';
+    cmctx.fillText('كامات أسطوانية (0–4/100 فقط)', x4 + w / 2, y + h - 35);
+    cmctx.fillText('تفتح الكوليت وتزق 68.5 مم وتقفله', x4 + w / 2, y + h - 19);
+    cmctx.textAlign = 'left';
+  }
+
+  // =========================================================================
+  // 4. SECTION D: 100% PHYSICALLY HONEST 3D-PROJECTED HELICAL GROOVE CLUTCH LAB!
+  //    - FIXED FULCRUM PIVOT (NEVER MOVES!)
+  //    - RIGID SEE-SAW LEVER WITH SLOTTED YOKE!
+  //    - REAL 3D-PROJECTED HELICAL CAM GROOVE SCROLLING CONTINUOUSLY ON THE DRUM!
+  //    - ZERO FAKE POP-IN TRIANGLES & ZERO METAL PENETRATION!
+  // =========================================================================
+  function drawClutchLab(st) {
+    kctx.clearRect(0, 0, clCanvas.width, clCanvas.height);
+
+    let activeClutchNum = 3;
+    if (d1Selected === '1') activeClutchNum = 1;
+    else if (d1Selected === '2') activeClutchNum = 2;
+    else if (d1Selected === '3') activeClutchNum = 3;
+    else {
+      if (st.clutch1) activeClutchNum = 1;
+      else if (st.clutch2) activeClutchNum = 2;
+      else activeClutchNum = 3;
+    }
+
+    const dogs = TRIP_DOGS[activeClutchNum];
+    const win  = CLUTCH_WIN[activeClutchNum];
+    const clutchNames = {
+      1: 'Clutch #1: Bar Feed (1 Dog)',
+      2: 'Clutch #2: Speed/Rev (3 Dogs)',
+      3: 'Clutch #3: Turret Index (5 Dogs)'
+    };
+
+    let phase = -1, diskAng = camAngle;
+    if (d1SlowTestActive) {
+      phase = d1SlowTestPhase;
+      // Rotate Trip Disk smoothly across its first dog so dog physically pushes roller at 0..0.16!
+      diskAng = (dogs[0] - 3.5 + d1SlowTestPhase * (win + 7) + 360) % 360;
+    } else {
+      phase = getClutchPhaseFromDogs(camAngle, activeClutchNum);
+      diskAng = camAngle;
+    }
+
+    // Physical contact between any Trip Dog and the 12 o'clock roller
+    let rollerBump = 0;
+    for (const d of dogs) {
+      let delta = ((diskAng - d + 540) % 360) - 180;
+      if (delta > -3.5 && delta < 4.5) {
+        const b = delta < 0.5 ? smoothstep((delta + 3.5) / 4.0) : (1 - smoothstep((delta - 0.5) / 4.0));
+        rollerBump = Math.max(rollerBump, b);
+      }
+    }
+
+    /*
+     * EXACT PHYSICAL STATES OF SLIDE 62 ONE-REVOLUTION GROOVED-DRUM CLUTCH:
+     * - Drum outer radius = 36 px (top y=68, bottom y=140).
+     * - Helical Throw-Out Groove carved into the drum surface (depth = 8 px -> groove floor y=132 at 6 o'clock!).
+     * - Fixed Latch Pin Center X = 266 (guided vertically inside Fixed Hatched Bushing y=162..200).
+     * - Standby (jawLock = 0, sldX = 188, revAngle = 0°):
+     *     The pocket end of the helical groove is at 6 o'clock directly at x = 266!
+     *     Pin tip is UP at y = 133 (seated cleanly INSIDE the 8px-deep groove pocket!), holding the drum at sldX=188 against the spring!
+     * - Step 1 (0.00..0.16): Trip Dog bumps Left Roller UP -> Rigid Lever tilts clockwise around FIXED Pivot (190, 212) ->
+     *     Pin drops straight DOWN to y = 152 (12 px CLEAR below drum outer surface y=140!).
+     * - Step 2 (0.16..0.26): Path is completely clear! Compression Spring snaps Drum + Sliding Jaw LEFT by 28 px (sldX: 188 -> 160),
+     *     interlocking dog teeth FLUSH at x = 144..158!
+     * - Step 3 (0.26..0.76, revAngle = 0° -> 270°): Drum spins WITH driver! Trip Dog has passed ->
+     *     Pin's return spring pushes Pin UP until its tip STOPS EXTERNALLY against the smooth outer drum surface (y = 141, touching y=140!).
+     *     Meanwhile the helical groove scrolls cleanly across the front of the rotating drum!
+     * - Step 4 (0.76..1.00, revAngle = 270° -> 360°): The helical groove entrance arrives at 6 o'clock under x = 266!
+     *     Pin drops 7 px UP into the groove (y = 141 -> 133), and as the drum finishes 270° -> 360°, the diagonal helical wall
+     *     physically cams/slides the drum RIGHT (160 -> 188) against the spring until the teeth separate and the drum stops at 360°!
+     */
+    let pinTopY = 133;  // 133 = seated in groove pocket | 141 = riding outer drum | 152 = pulled clear down
+    let jawLock = 0;    // 0 = RIGHT (188) | 1 = LEFT (160)
+    let revAngle = 0;   // 0 .. 2*PI
+    let stepTag = 'STANDBY';
+    let d1Ar1 = 'الوضع العادي (مفصول): البنز الأخضر قاعد جوه جيب المجرى الحلزوني وحابس الجلبة يمين ضد السوستة.';
+    let d1Ar2 = `القرص عليه (${dogs.length}) Trip Dogs؛ أول ما أي نتوء يوصل للساعة 12 هيرفع الرولر ويسحب البنز لتحت!`;
+
+    if (phase >= 0) {
+      if (phase < 0.16) {
+        stepTag = '1. PULL PIN OUT';
+        const p = smoothstep(phase / 0.16);
+        pinTopY = 133 + 19 * p; // 133 -> 152 (clears y=140 by 12px!)
+        jawLock = 0;
+        d1Ar1 = '1) النتوء الأحمر رفع الرولر ← الذراع مال حول محوره الثابت (Fixed Pivot) وسحب البنز لتحت بره المجرى!';
+        d1Ar2 = 'لاحظ المحور الأصفر ثابت في مكانه ما بيتحركش، والبنز نزل عمودياً جوه الدليل الثابت.';
+      } else if (phase < 0.26) {
+        stepTag = '2. SPRING ENGAGES';
+        pinTopY = 152;
+        jawLock = smoothstep((phase - 0.16) / 0.10);
+        d1Ar1 = '2) الطريق فاضي تحت الأسطوانة ← السوستة الخضراء زقّت الأسطوانة والفك المتحرك شمال!';
+        d1Ar2 = 'سنون الفك الأزرق مسكت بالكامل جوه سنون الفك الأصفر الدوّار (120 RPM)!';
+      } else if (phase < 0.76) {
+        stepTag = '3. SPIN 0°→270°';
+        const retP = smoothstep((phase - 0.26) / 0.18);
+        pinTopY = 152 - 11 * retP; // Rises ONLY to y=141 (riding OUTSIDE smooth drum y=140!)
+        jawLock = 1;
+        revAngle = ((phase - 0.26) / 0.50) * (Math.PI * 1.5); // 0° -> 270°
+        d1Ar1 = '3) الأسطوانة بتلف مع العمود (0° ← 270°) وشايف المجرى الأحمر بيلف حواليها!';
+        d1Ar2 = 'البنز الأخضر رجع بسوستته ولامس السطح الخارجي للأسطوانة من بره (صفر تداخل في المعدن).';
+      } else {
+        stepTag = '4. HELICAL KICK-OUT';
+        const kp = smoothstep((phase - 0.76) / 0.24);
+        // Pin snaps up into arriving helical groove at start of 270°->360° (y=141 -> 133)
+        pinTopY = 141 - 8 * Math.min(1, kp * 2.5);
+        jawLock = 1 - kp; // Helical groove wall smoothly cams drum RIGHT (160 -> 188)!
+        revAngle = Math.PI * 1.5 + kp * (Math.PI * 0.5); // 270° -> 360°
+        d1Ar1 = '4) عند 270° ← 360°: المجرى الحلزوني الأحمر لف ووصل تحت للبنز الثابت فالبنز دخل فيه!';
+        d1Ar2 = 'جدار المجرى المائل زحلق الأسطوانة يمين ضد السوستة ← السنون فكّت واللفة خلصت بالمللي!';
+      }
+    } else {
+      pinTopY = 133 + 19 * rollerBump;
+    }
+
+    drawPanelFrame(kctx, 10, 8, 580, 374, `D1. ${clutchNames[activeClutchNum]} — SLIDE 62 GROOVED DRUM`, phase >= 0 ? stepTag : `STANDBY (${dogs.length} DOGS)`, phase >= 0 ? '#f59e0b' : '#64748b');
+
+    const sy1 = 104, drumR = 36;
+    // Fast Auxiliary Shaft (120 RPM)
+    kctx.fillStyle = '#334155'; kctx.fillRect(24, sy1 - 9, 444, 18);
+    drawSpinRibs(kctx, 24, sy1 - 9, 444, 18, auxAngle * 9, 'rgba(251,191,36,0.55)');
+
+    // DRIVING JAW (Left: 64..144, teeth 144..158)
+    const drvR = 144;
+    kctx.save();
+    if (jawLock > 0.6) { kctx.shadowColor = '#f59e0b'; kctx.shadowBlur = 12; }
+    kctx.fillStyle = '#b45309'; kctx.strokeStyle = '#fde68a'; kctx.lineWidth = 1.6;
+    kctx.beginPath();
+    kctx.moveTo(64, sy1 - drumR); kctx.lineTo(drvR, sy1 - drumR);
+    kctx.lineTo(drvR, sy1 - 24); kctx.lineTo(drvR + 14, sy1 - 24);
+    kctx.lineTo(drvR + 14, sy1 - 10); kctx.lineTo(drvR, sy1 - 10);
+    kctx.lineTo(drvR, sy1 + 10); kctx.lineTo(drvR + 14, sy1 + 10);
+    kctx.lineTo(drvR + 14, sy1 + 24); kctx.lineTo(drvR, sy1 + 24);
+    kctx.lineTo(drvR, sy1 + drumR); kctx.lineTo(64, sy1 + drumR);
+    kctx.closePath(); kctx.fill(); kctx.stroke();
+    drawSpinRibs(kctx, 66, sy1 - 34, 76, 68, auxAngle * 14, 'rgba(254,240,138,0.45)');
+    kctx.restore();
+    kctx.fillStyle = '#fde68a'; kctx.font = 'bold 9.5px Segoe UI'; kctx.fillText('Driving Jaw (120 RPM)', 56, sy1 - 44);
+
+    // SLIDING JAW + 3D-PROJECTED HELICAL GROOVED DRUM (sldX: 188 -> 160!)
+    const sldX = 188 - jawLock * 28;
+    const drumW = 132;
+    kctx.save();
+    if (jawLock > 0.6) { kctx.shadowColor = '#22d3ee'; kctx.shadowBlur = 12; }
+    // Cylindrical 3D shading on drum
+    const drGrad = kctx.createLinearGradient(0, sy1 - drumR, 0, sy1 + drumR);
+    if (jawLock > 0.6) {
+      drGrad.addColorStop(0.0, '#0c4a6e'); drGrad.addColorStop(0.35, '#0284c7'); drGrad.addColorStop(0.75, '#0369a1'); drGrad.addColorStop(1.0, '#082f49');
+    } else {
+      drGrad.addColorStop(0.0, '#131b33'); drGrad.addColorStop(0.35, '#2b3963'); drGrad.addColorStop(0.75, '#1d2745'); drGrad.addColorStop(1.0, '#0e1426');
+    }
+    kctx.fillStyle = drGrad;
+    kctx.strokeStyle = jawLock > 0.6 ? '#7dd3fc' : '#64748b'; kctx.lineWidth = 1.6;
+    kctx.beginPath();
+    kctx.moveTo(sldX, sy1 - drumR); kctx.lineTo(sldX + drumW, sy1 - drumR);
+    kctx.lineTo(sldX + drumW, sy1 + drumR); kctx.lineTo(sldX, sy1 + drumR);
+    kctx.lineTo(sldX, sy1 + 24); kctx.lineTo(sldX - 14, sy1 + 24);
+    kctx.lineTo(sldX - 14, sy1 + 10); kctx.lineTo(sldX, sy1 + 10);
+    kctx.lineTo(sldX, sy1 - 10); kctx.lineTo(sldX - 14, sy1 - 10);
+    kctx.lineTo(sldX - 14, sy1 - 24); kctx.lineTo(sldX, sy1 - 24);
+    kctx.closePath(); kctx.fill(); kctx.stroke();
+
+    // REAL 3D-PROJECTED CONTINUOUS HELICAL GROOVE ON THE FRONT FACE OF THE ROTATING DRUM!
+    // Parametric drum angle phi in [0, 2*PI):
+    //   phi = 0 is 6 o'clock (bottom, where the Pin touches at y = sy1 + drumR!)
+    //   Front visible hemisphere has phi_world = (phi + revAngle) mod 2*PI in [-PI/2 .. +PI/2]?
+    //   Let's map: world angle alpha = phi + revAngle.
+    //   Wait: at alpha = 0 (6 o'clock bottom): y = sy1 + drumR (bottom edge!), facing camera at alpha = PI/2 (front center, y = sy1), top at alpha = PI (12 o'clock, y = sy1 - drumR).
+    //   So FRONT visible face is alpha ∈ [0, PI] with y = sy1 + drumR * Math.cos(alpha)!
+    //   Groove axial coordinate x_local(phi) on the drum:
+    //     - At phi = 0 (pocket at 6 o'clock when revAngle=0): x_local = 78 (so world X = 188 + 78 = 266 = EXACT PIN X!)
+    //     - Helical ramp occupies phi ∈ [270°..360°] = [-90°..0°]: smoothly sweeps from x_local = 106 (at phi=270°, so when engaged sldX=160, 160+106 = 266 = EXACT PIN X!) down to x_local = 78 (at phi=360°=0°)!
+    //   VERIFY THAT!
+    //     - At revAngle = 270° (3*PI/2), phi = 270° is at alpha = 270° - 270° = 0 (6 o'clock!): x_world = 160 + 106 = 266 (EXACTLY AT PIN X = 266!)
+    //     - As revAngle advances 270° -> 360°, the point at 6 o'clock is phi = revAngle:
+    //       x_local(phi) = 106 - 28 * ((phi - 270°)/90°), AND sldX = 160 + 28 * ((revAngle - 270°)/90°)!
+    //       So sldX + x_local(revAngle) = 160 + 106 = 266 ALWAYS!! The Pin stays 100% LOCKED INSIDE THE HELICAL GROOVE through the ENTIRE kick-out!!
+    kctx.save();
+    kctx.beginPath(); kctx.rect(sldX + 2, sy1 - drumR + 1, drumW - 4, drumR * 2 - 2); kctx.clip();
+
+    // Draw the helical kick-out groove band (phi from 270° to 360° -> 90° wrap!) on the front hemisphere!
+    // For any drum point phi, its screen alpha = ((revAngle - phi) mod 2*PI):
+    //   alpha = 0 is 6 o'clock (bottom), alpha = PI/2 is front center, alpha = PI is 12 o'clock (top).
+    const groovePts = [];
+    for (let deg = 270; deg <= 365; deg += 3) {
+      const phi = (deg * Math.PI) / 180;
+      const frac = Math.min(1, (deg - 270) / 90);
+      const xLoc = 106 - 28 * smoothstep(frac);
+      // World angle from 6 o'clock upward across front face:
+      let alpha = ((revAngle - phi) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+      if (alpha <= Math.PI) {
+        const gx = sldX + xLoc;
+        const gy = sy1 + (drumR - 2) * Math.cos(alpha);
+        groovePts.push({ x: gx, y: gy, alpha });
+      }
+    }
+    if (groovePts.length >= 2) {
+      // Dark recessed groove channel
+      kctx.strokeStyle = '#090c17'; kctx.lineWidth = 11; kctx.lineCap = 'round'; kctx.lineJoin = 'round';
+      kctx.beginPath();
+      groovePts.forEach((pt, idx) => idx === 0 ? kctx.moveTo(pt.x, pt.y) : kctx.lineTo(pt.x, pt.y));
+      kctx.stroke();
+      // Glowing red helical cam wall inside groove
+      kctx.strokeStyle = '#f43f5e'; kctx.lineWidth = 4.5;
+      kctx.stroke();
+    }
+
+    // Also draw a subtle reference index stripe at phi = 0° (pocket) so rotation is unmistakable!
+    const alpha0 = ((revAngle) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+    if (alpha0 <= Math.PI) {
+      const py0 = sy1 + (drumR - 2) * Math.cos(alpha0);
+      kctx.fillStyle = '#f43f5e';
+      kctx.beginPath(); kctx.arc(sldX + 78, py0, 5.5, 0, Math.PI * 2); kctx.fill();
+      kctx.strokeStyle = '#fecdd3'; kctx.lineWidth = 1.2; kctx.stroke();
+    }
+    kctx.restore();
+    kctx.restore();
+
+    kctx.fillStyle = jawLock > 0.6 ? '#7dd3fc' : '#cbd5e1'; kctx.font = 'bold 9.5px Segoe UI';
+    kctx.fillText(jawLock > 0.6 ? 'Grooved Drum (SPINNING 1 REV!)' : 'Grooved Drum + Helical Cam Track', sldX + 2, sy1 - 44);
+
+    // Compression Spring (right of drum -> fixed thrust block at x=426)
+    const spL = sldX + drumW, spR = 426;
+    kctx.strokeStyle = '#10b981'; kctx.lineWidth = 2.6;
+    kctx.beginPath(); kctx.moveTo(spL, sy1 - 22);
+    for (let i = 0; i <= 7; i++) kctx.lineTo(spL + (spR - spL) * (i / 7), sy1 + (i % 2 === 0 ? -22 : 22));
+    kctx.stroke();
+    kctx.fillStyle = '#475569'; kctx.fillRect(spR, sy1 - 30, 12, 60);
+    kctx.fillStyle = '#6ee7b7'; kctx.font = 'bold 9px Segoe UI'; kctx.fillText('Spring ⬅', spL + 10, sy1 - 30);
+
+    // Output 1-Rev Dial
+    const dialX = 520, dialY = 104, dialR = 38;
+    kctx.save(); kctx.translate(dialX, dialY);
+    kctx.fillStyle = jawLock > 0.6 ? 'rgba(34,211,238,0.16)' : '#141a30';
+    kctx.strokeStyle = jawLock > 0.6 ? '#22d3ee' : '#475569'; kctx.lineWidth = 2;
+    kctx.beginPath(); kctx.arc(0, 0, dialR, 0, Math.PI * 2); kctx.fill(); kctx.stroke();
+    if (revAngle > 0.04) {
+      kctx.strokeStyle = '#fbbf24'; kctx.lineWidth = 4.5;
+      kctx.beginPath(); kctx.arc(0, 0, dialR - 6, -Math.PI / 2, -Math.PI / 2 + revAngle); kctx.stroke();
+    }
+    const nRad = -Math.PI / 2 + revAngle;
+    kctx.strokeStyle = '#fff'; kctx.lineWidth = 2.5;
+    kctx.beginPath(); kctx.moveTo(0, 0); kctx.lineTo(Math.cos(nRad) * (dialR - 8), Math.sin(nRad) * (dialR - 8)); kctx.stroke();
+    kctx.fillStyle = '#fbbf24'; kctx.beginPath(); kctx.arc(0, 0, 4, 0, Math.PI * 2); kctx.fill();
+    kctx.restore();
+    kctx.fillStyle = '#67e8f9'; kctx.font = 'bold 10px Segoe UI'; kctx.textAlign = 'center';
+    kctx.fillText('Output: ' + Math.round((revAngle * 180) / Math.PI) + '° / 360°', dialX, dialY + 52);
+    kctx.textAlign = 'left';
+
+    // RIGID VERTICAL LATCH PIN IN FIXED GUIDE BUSHING (X = 266 ALWAYS!)
+    const lx = 266;
+    const pinLen = 84;
+    const pinCrossY = pinTopY + pinLen - 8; // 209 (up in pocket) .. 217 (riding outer drum) .. 228 (pulled down)
+
+    // Fixed Hatched Guide Bushing (y=160..198)
+    kctx.fillStyle = '#1e293b'; kctx.strokeStyle = '#64748b'; kctx.lineWidth = 1.3;
+    kctx.fillRect(lx - 18, 160, 11, 38); kctx.strokeRect(lx - 18, 160, 11, 38);
+    kctx.fillRect(lx + 7, 160, 11, 38); kctx.strokeRect(lx + 7, 160, 11, 38);
+    kctx.strokeStyle = '#475569'; kctx.lineWidth = 1;
+    for (let hy = 164; hy < 196; hy += 7) {
+      kctx.beginPath(); kctx.moveTo(lx - 17, hy); kctx.lineTo(lx - 8, hy + 5); kctx.stroke();
+      kctx.beginPath(); kctx.moveTo(lx + 8, hy); kctx.lineTo(lx + 17, hy + 5); kctx.stroke();
+    }
+    kctx.fillStyle = '#94a3b8'; kctx.font = '8.5px Segoe UI'; kctx.fillText('Fixed Guide', lx + 21, 182);
+
+    // Pin Return Spring (under pin -> fixed floor y=274)
+    const pinBotY = pinTopY + pinLen;
+    kctx.strokeStyle = '#34d399'; kctx.lineWidth = 2;
+    kctx.beginPath(); kctx.moveTo(lx, pinBotY);
+    for (let i = 0; i <= 6; i++) kctx.lineTo(lx + (i === 0 || i === 6 ? 0 : (i % 2 === 0 ? -5 : 5)), pinBotY + (274 - pinBotY) * (i / 6));
+    kctx.stroke();
+    kctx.fillStyle = '#475569'; kctx.fillRect(lx - 14, 274, 28, 5);
+
+    // Rigid Pin Body (Rounded tip!)
+    kctx.fillStyle = pinTopY > 146 ? '#f43f5e' : '#10b981'; kctx.strokeStyle = '#fff'; kctx.lineWidth = 1.3;
+    rRect(kctx, lx - 6, pinTopY, 12, pinLen, [5, 5, 2, 2]); kctx.fill(); kctx.stroke();
+    kctx.fillStyle = pinTopY > 146 ? '#fda4af' : '#6ee7b7'; kctx.font = 'bold 9px Segoe UI';
+    kctx.fillText(
+      pinTopY > 146 ? '▼ PIN CLEAR BELOW DRUM' : (pinTopY > 138 ? '▲ RIDING OUTER SURFACE' : '▲ SEATED IN GROOVE'),
+      lx + 21, 166
+    );
+
+    // Multi-Dog Trip Disk (Bottom Left)
+    const tdX = 114, tdY = 282, tdR = 54;
+    kctx.save(); kctx.translate(tdX, tdY);
+    kctx.fillStyle = '#17203a'; kctx.strokeStyle = '#22d3ee'; kctx.lineWidth = 2.2;
+    kctx.beginPath(); kctx.arc(0, 0, tdR, 0, Math.PI * 2); kctx.fill(); kctx.stroke();
+    kctx.strokeStyle = '#334155'; kctx.lineWidth = 5;
+    kctx.beginPath(); kctx.arc(0, 0, tdR - 12, 0, Math.PI * 2); kctx.stroke();
+    dogs.forEach(dogDeg => {
+      const theta = -Math.PI / 2 + ((diskAng - dogDeg) * Math.PI) / 180;
+      const isHit = Math.abs(((diskAng - dogDeg + 540) % 360) - 180) < 6;
+      kctx.save(); kctx.rotate(theta);
+      kctx.fillStyle = isHit ? '#fbbf24' : '#f43f5e'; kctx.strokeStyle = isHit ? '#fff' : '#fecdd3'; kctx.lineWidth = 1.2;
+      kctx.beginPath(); kctx.moveTo(tdR - 13, -7); kctx.lineTo(tdR + 12, -4); kctx.lineTo(tdR + 12, 5); kctx.lineTo(tdR - 13, 7); kctx.closePath();
+      kctx.fill(); kctx.stroke();
+      kctx.fillStyle = '#0c1020'; kctx.beginPath(); kctx.arc(tdR - 10, 0, 2.3, 0, Math.PI * 2); kctx.fill();
+      kctx.restore();
+    });
+    kctx.fillStyle = '#0c1020'; kctx.beginPath(); kctx.arc(0, 0, 14, 0, Math.PI * 2); kctx.fill();
+    kctx.strokeStyle = '#22d3ee'; kctx.lineWidth = 1.5; kctx.stroke();
+    kctx.fillStyle = '#67e8f9'; kctx.font = 'bold 9.5px Segoe UI'; kctx.textAlign = 'center'; kctx.fillText('T-Slot Disk', 0, 26);
+    kctx.fillStyle = '#fde68a'; kctx.font = 'bold 9px Segoe UI'; kctx.fillText(`${dogs.length} Trip Dog${dogs.length > 1 ? 's' : ''}`, 0, -21);
+    kctx.restore();
+
+    // 100% FIXED FULCRUM PIVOT AT (190, 215) — NEVER MOVES A SINGLE PIXEL!
+    const pivX = 190, pivY = 215;
+    // Exact angle of rigid lever from FIXED pivot (190, 215) to Pin Cross-Pin (266, pinCrossY)!
+    const leverAngle = Math.atan2(pinCrossY - pivY, lx - pivX);
+    const leftArmLen = pivX - tdX; // 76 px
+    const leftTipX = pivX - Math.cos(leverAngle) * leftArmLen;
+    const leftTipY = pivY - Math.sin(leverAngle) * leftArmLen;
+
+    // Rigid Lever Bar
+    kctx.strokeStyle = pinTopY > 146 ? '#f43f5e' : '#cbd5e1'; kctx.lineWidth = 7; kctx.lineCap = 'round';
+    kctx.beginPath(); kctx.moveTo(leftTipX, leftTipY); kctx.lineTo(lx, pinCrossY); kctx.stroke();
+    // Roller on Left Tip
+    kctx.fillStyle = rollerBump > 0.2 ? '#fbbf24' : '#e2e8f0'; kctx.strokeStyle = '#0c1020'; kctx.lineWidth = 1.5;
+    kctx.beginPath(); kctx.arc(leftTipX, leftTipY, 6.5, 0, Math.PI * 2); kctx.fill(); kctx.stroke();
+    // Fixed Bolted Fulcrum Pedestal (Stationary!)
+    kctx.fillStyle = '#475569';
+    kctx.beginPath(); kctx.moveTo(pivX - 11, 238); kctx.lineTo(pivX + 11, 238); kctx.lineTo(pivX, pivY); kctx.closePath(); kctx.fill();
+    kctx.fillRect(pivX - 16, 238, 32, 4);
+    kctx.fillStyle = '#fbbf24'; kctx.beginPath(); kctx.arc(pivX, pivY, 5.5, 0, Math.PI * 2); kctx.fill();
+    kctx.fillStyle = '#94a3b8'; kctx.font = '8.5px Segoe UI'; kctx.fillText('Fixed Pivot', pivX - 22, 253);
+    // Cross-pin joint on Latch Pin
+    kctx.fillStyle = '#fde047'; kctx.strokeStyle = '#0c1020'; kctx.lineWidth = 1.2;
+    kctx.beginPath(); kctx.arc(lx, pinCrossY, 4.5, 0, Math.PI * 2); kctx.fill(); kctx.stroke();
+
+    // Bottom Arabic Box in D1
+    rRect(kctx, 196, 310, 384, 58, 6);
+    kctx.fillStyle = 'rgba(124, 92, 255, 0.12)'; kctx.fill(); kctx.strokeStyle = '#4c3f91'; kctx.lineWidth = 1; kctx.stroke();
+    kctx.fillStyle = '#eef2ff'; kctx.font = '10.6px Segoe UI'; kctx.textAlign = 'right';
+    kctx.fillText(d1Ar1, 572, 333); kctx.fillStyle = '#c4b5fd'; kctx.fillText(d1Ar2, 572, 354); kctx.textAlign = 'left';
+
+    // -----------------------------------------------------------------------
+    // D2 (RIGHT): DOUBLE-ACTING SPINDLE CLUTCH + SPEED CAM
+    // -----------------------------------------------------------------------
+    let targetPos = -1;
+    if (d2ManualMode === 'left') targetPos = -1;
+    else if (d2ManualMode === 'neutral') targetPos = 0;
+    else if (d2ManualMode === 'right') targetPos = 1;
+    else {
+      if (st.p >= 67.5 && st.p < 73) targetPos = 1;
+      else if (st.p >= 60 && st.p < 67.5) targetPos = 1;
+      else if ((st.p >= 59 && st.p < 60) || (st.p >= 73 && st.p < 74)) targetPos = 0;
+      else targetPos = -1;
+    }
+
+    const grabbedA = d2SleevePos < -0.65, grabbedB = d2SleevePos > 0.65, isNeutral = !grabbedA && !grabbedB;
+    let d2Badge = 'GEAR A: 500 RPM FWD', d2Col = '#22d3ee';
+    let d2Ar1 = 'كامة السرعة (من كلاتش #2) زقّت الشوكة شمال ← مسكت ترس (A) وسابت (B)';
+    let d2Ar2 = 'فالظرف والبار بيلفّوا أمامي سريع (500 RPM) للخراطة والمجاري والقطع!';
+    if (grabbedB) {
+      const isRevNow = (d2ManualMode === 'right') || (st.p >= 67.5 && st.p < 73);
+      d2Badge = isRevNow ? 'GEAR B: 500 REV' : 'GEAR B: 170 RPM (M16)';
+      d2Col = isRevNow ? '#f43f5e' : '#f59e0b';
+      d2Ar1 = 'كامة السرعة (من كلاتش #2) سحبت الشوكة يمين ← سابت (A) ومسكت ترس (B)';
+      d2Ar2 = isRevNow ? 'فالسبندل عكس دورانه (REV) لفك لقمة القلوظة M16 بأمان!' : 'فالسبندل بطّأ سرعته لـ 170 RPM المناسبة لقطع سن M16!';
+    } else if (isNeutral) {
+      d2Badge = 'NEUTRAL (سايب الاتنين)'; d2Col = '#94a3b8';
+      d2Ar1 = 'الشوكة في النص (Neutral): سايبة ترس (A) وسايبة ترس (B)';
+      d2Ar2 = 'الترسين بيلفّوا حرّين على العمود والسبندل متوقف لحظة التبديل!';
+    }
+
+    drawPanelFrame(kctx, 600, 8, 530, 374, 'D2. DOUBLE-ACTING SPINDLE CLUTCH + SPEED CAM (كلاتش السبندل)', d2Badge, d2Col);
+    const sy2 = 188;
+    kctx.fillStyle = '#334155'; kctx.fillRect(616, sy2 - 10, 380, 20);
+    kctx.strokeStyle = '#94a3b8'; kctx.lineWidth = 1.2;
+    for (let spY = sy2 - 6; spY <= sy2 + 6; spY += 4) { kctx.beginPath(); kctx.moveTo(735, spY); kctx.lineTo(885, spY); kctx.stroke(); }
+    drawSpinRibs(kctx, 616, sy2 - 10, 380, 20, d2OutputAngle * 14, d2Col + 'aa');
+
+    const gAX = 662, gAW = 54;
+    kctx.save(); if (grabbedA) { kctx.shadowColor = '#22d3ee'; kctx.shadowBlur = 14; }
+    kctx.fillStyle = grabbedA ? '#0e7490' : '#163042'; kctx.strokeStyle = grabbedA ? '#67e8f9' : '#38bdf8'; kctx.lineWidth = 1.8;
+    kctx.beginPath(); kctx.moveTo(gAX, sy2-46); kctx.lineTo(gAX+gAW, sy2-46); kctx.lineTo(gAX+gAW, sy2-28); kctx.lineTo(gAX+gAW+14, sy2-28); kctx.lineTo(gAX+gAW+14, sy2-12); kctx.lineTo(gAX+gAW, sy2-12); kctx.lineTo(gAX+gAW, sy2+12); kctx.lineTo(gAX+gAW+14, sy2+12); kctx.lineTo(gAX+gAW+14, sy2+28); kctx.lineTo(gAX+gAW, sy2+28); kctx.lineTo(gAX+gAW, sy2+46); kctx.lineTo(gAX, sy2+46); kctx.closePath();
+    kctx.fill(); kctx.stroke(); drawSpinRibs(kctx, gAX+4, sy2-44, gAW-8, 88, gearAAngle*16, 'rgba(103,232,249,0.55)'); kctx.restore();
+    kctx.fillStyle = '#67e8f9'; kctx.font = 'bold 10px Segoe UI'; kctx.textAlign = 'center'; kctx.fillText('Gear A (500 FWD)', gAX+gAW/2, sy2-55);
+    kctx.fillStyle = '#94a3b8'; kctx.font = '9px Segoe UI'; kctx.fillText('حر (أمامي ↻)', gAX+gAW/2, sy2+60);
+
+    const gBX = 902, gBW = 54;
+    kctx.save(); if (grabbedB) { kctx.shadowColor = d2Col; kctx.shadowBlur = 14; }
+    kctx.fillStyle = grabbedB ? '#9f1239' : '#3b1728'; kctx.strokeStyle = grabbedB ? '#fda4af' : '#fb7185'; kctx.lineWidth = 1.8;
+    kctx.beginPath(); kctx.moveTo(gBX+gBW, sy2-46); kctx.lineTo(gBX, sy2-46); kctx.lineTo(gBX, sy2-28); kctx.lineTo(gBX-14, sy2-28); kctx.lineTo(gBX-14, sy2-12); kctx.lineTo(gBX, sy2-12); kctx.lineTo(gBX, sy2+12); kctx.lineTo(gBX-14, sy2+12); kctx.lineTo(gBX-14, sy2+28); kctx.lineTo(gBX, sy2+28); kctx.lineTo(gBX, sy2+46); kctx.lineTo(gBX+gBW, sy2+46); kctx.closePath();
+    kctx.fill(); kctx.stroke(); drawSpinRibs(kctx, gBX+4, sy2-44, gBW-8, 88, gearBAngle*16, 'rgba(253,164,175,0.55)'); kctx.restore();
+    kctx.fillStyle = '#fda4af'; kctx.font = 'bold 10px Segoe UI'; kctx.fillText('Gear B (REV/Low)', gBX+gBW/2, sy2-55);
+    kctx.fillStyle = '#94a3b8'; kctx.font = '9px Segoe UI'; kctx.fillText('حر (عكسي ↺)', gBX+gBW/2, sy2+60);
+
+    const slvCx = 809 + d2SleevePos * 31;
+    kctx.save(); kctx.fillStyle = '#312e81'; kctx.strokeStyle = '#c4b5fd'; kctx.lineWidth = 2;
+    kctx.beginPath();
+    kctx.moveTo(slvCx-48, sy2-36); kctx.lineTo(slvCx-10, sy2-36); kctx.lineTo(slvCx-10, sy2-24); kctx.lineTo(slvCx+10, sy2-24); kctx.lineTo(slvCx+10, sy2-36); kctx.lineTo(slvCx+48, sy2-36);
+    kctx.lineTo(slvCx+48, sy2-28); kctx.lineTo(slvCx+62, sy2-28); kctx.lineTo(slvCx+62, sy2-12); kctx.lineTo(slvCx+48, sy2-12);
+    kctx.lineTo(slvCx+48, sy2+12); kctx.lineTo(slvCx+62, sy2+12); kctx.lineTo(slvCx+62, sy2+28); kctx.lineTo(slvCx+48, sy2+28);
+    kctx.lineTo(slvCx+48, sy2+36); kctx.lineTo(slvCx-48, sy2+36);
+    kctx.lineTo(slvCx-48, sy2+28); kctx.lineTo(slvCx-62, sy2+28); kctx.lineTo(slvCx-62, sy2+12); kctx.lineTo(slvCx-48, sy2+12);
+    kctx.lineTo(slvCx-48, sy2-12); kctx.lineTo(slvCx-62, sy2-12); kctx.lineTo(slvCx-62, sy2-28); kctx.lineTo(slvCx-48, sy2-28);
+    kctx.closePath(); kctx.fill(); kctx.stroke(); drawSpinRibs(kctx, slvCx-44, sy2-22, 88, 44, d2OutputAngle*14, 'rgba(196,181,253,0.45)'); kctx.restore();
+    kctx.fillStyle = '#e0e7ff'; kctx.font = 'bold 9px Segoe UI'; kctx.fillText('Sliding Sleeve', slvCx, sy2+4);
+    kctx.fillStyle = '#c4b5fd'; kctx.fillText('(معشّقة في السبندل)', slvCx, sy2+52);
+
+    const scX = 762, scY = 48, scW = 94, scH = 32;
+    kctx.fillStyle = st.clutch2 ? '#292214' : '#182038'; kctx.strokeStyle = st.clutch2 ? '#f59e0b' : '#64748b'; kctx.lineWidth = 1.5;
+    rRect(kctx, scX, scY, scW, scH, 5); kctx.fill(); kctx.stroke();
+    kctx.strokeStyle = st.clutch2 ? '#fbbf24' : '#94a3b8'; kctx.lineWidth = 2.5;
+    kctx.beginPath(); kctx.moveTo(scX+18, scY+4); kctx.lineTo(scX+76, scY+28); kctx.stroke();
+    kctx.fillStyle = '#fde68a'; kctx.font = 'bold 9px Segoe UI'; kctx.fillText('Cam 5: Speed Cam (from Clutch #2)', scX+scW/2, scY-5);
+
+    const forkTopPinX = 809 - d2SleevePos * 20;
+    kctx.strokeStyle = '#fbbf24'; kctx.lineWidth = 5.5; kctx.lineCap = 'round';
+    kctx.beginPath(); kctx.moveTo(forkTopPinX, scY+16); kctx.lineTo(slvCx, sy2-30); kctx.stroke();
+    kctx.fillStyle = '#fbbf24';
+    kctx.beginPath(); kctx.arc(forkTopPinX, scY+16, 4.5, 0, Math.PI*2); kctx.fill();
+    kctx.beginPath(); kctx.arc(809, 110, 5.5, 0, Math.PI*2); kctx.fill();
+    rRect(kctx, slvCx-7, sy2-35, 14, 10, 2); kctx.fill();
+
+    const chX = 1056, chY = 188, chR = 40;
+    kctx.save(); kctx.translate(chX, chY); kctx.rotate(d2OutputAngle);
+    kctx.fillStyle = '#1e293b'; kctx.strokeStyle = d2Col; kctx.lineWidth = 2.5;
+    kctx.beginPath(); kctx.arc(0, 0, chR, 0, Math.PI*2); kctx.fill(); kctx.stroke();
+    for (let j = 0; j < 3; j++) { kctx.save(); kctx.rotate(j*(Math.PI*2/3)); kctx.fillStyle = d2Col; kctx.fillRect(10, -5, 26, 10); kctx.restore(); }
+    kctx.fillStyle = '#fde047'; kctx.beginPath(); kctx.arc(0, 0, 10, 0, Math.PI*2); kctx.fill(); kctx.restore();
+    kctx.fillStyle = d2Col; kctx.font = 'bold 9.5px Segoe UI';
+    kctx.fillText('Brass Bar Output', chX, chY+55);
+    kctx.fillText(grabbedA ? '↻ 500 RPM' : (grabbedB ? '↺ 170 / REV' : '■ STOP'), chX, chY+68);
+
+    rRect(kctx, 612, 310, 506, 58, 6);
+    kctx.fillStyle = 'rgba(124, 92, 255, 0.12)'; kctx.fill(); kctx.strokeStyle = '#4c3f91'; kctx.lineWidth = 1; kctx.stroke();
+    kctx.fillStyle = '#eef2ff'; kctx.font = '10.6px Segoe UI'; kctx.textAlign = 'right';
+    kctx.fillText(d2Ar1, 1110, 333); kctx.fillStyle = '#c4b5fd'; kctx.fillText(d2Ar2, 1110, 354); kctx.textAlign = 'left';
+
+    return targetPos;
+  }
+
+  // =========================================================================
+  // 5. SIDEBAR S-DIAGRAM (0..100 PARTS)
+  // =========================================================================
+  function drawCamChart() {
+    const w = chCanvas.width, h = chCanvas.height;
+    cctx.clearRect(0, 0, w, h);
+    const padL = 10, padR = 10, bw = w - padL - padR;
+
+    STAGES.forEach(st => {
+      if (st.type === 'RETRACT' || (st.type === 'AUX' && st.id > 0) || st.type === 'DWELL') {
+        const x1 = padL + (st.pStart / 100) * bw, x2 = padL + (st.pEnd / 100) * bw;
+        cctx.fillStyle = st.type === 'RETRACT' ? 'rgba(168,85,247,0.22)' : (st.type === 'DWELL' ? 'rgba(16,185,129,0.22)' : 'rgba(249,115,22,0.16)');
+        cctx.fillRect(x1, 16, x2 - x1, h - 34);
+      }
+    });
+
+    cctx.strokeStyle = '#1e264a'; cctx.lineWidth = 1;
+    for (let pt = 0; pt <= 100; pt += 20) {
+      const gx = padL + (pt / 100) * bw;
+      cctx.beginPath(); cctx.moveTo(gx, 16); cctx.lineTo(gx, h - 18); cctx.stroke();
+      cctx.fillStyle = '#64748b'; cctx.font = '9px Segoe UI'; cctx.fillText(pt + 'p', gx - 6, h - 5);
+    }
+
+    const plotCurve = (fn, color) => {
+      cctx.beginPath();
+      for (let d = 0; d <= 360; d += 1.5) {
+        const px = padL + (d / 360) * bw, py = (h - 20) - fn(d) * (h - 42);
+        if (d === 0) cctx.moveTo(px, py); else cctx.lineTo(px, py);
+      }
+      cctx.strokeStyle = color; cctx.lineWidth = 1.9; cctx.stroke();
+    };
+    plotCurve(getTurretCamLift, '#22d3ee');
+    plotCurve(getFrontSlideLift, '#06b6d4');
+    plotCurve(getRearSlideLift, '#c084fc');
+    plotCurve(getVerticalFormPartLift, '#f43f5e');
+
+    const cx = padL + (camAngle / 360) * bw;
+    cctx.strokeStyle = '#fbbf24'; cctx.lineWidth = 2;
+    cctx.beginPath(); cctx.moveTo(cx, 14); cctx.lineTo(cx, h - 18); cctx.stroke();
+
+    cctx.font = '9px Segoe UI';
+    cctx.fillStyle = '#22d3ee'; cctx.fillText('— Cam1', 10, 11);
+    cctx.fillStyle = '#06b6d4'; cctx.fillText('— Cam2', 56, 11);
+    cctx.fillStyle = '#f43f5e'; cctx.fillText('— Cam3', 102, 11);
+    cctx.fillStyle = '#d8b4fe'; cctx.fillText('■ Ret', 152, 11);
+    cctx.fillStyle = '#fdba74'; cctx.fillText('■ Idx', 192, 11);
+    cctx.fillStyle = '#6ee7b7'; cctx.fillText('■ Rest', 230, 11);
+  }
+
+  let lastStageId = -1;
+  function updateSidebar(st) {
+    hdrAngle.textContent = `${st.p.toFixed(1)}/100 (${camAngle.toFixed(1)}°)`;
+    sliderVal.textContent = `${st.p.toFixed(1)}p (${camAngle.toFixed(1)}°)`;
+    angleSlider.value = camAngle;
+    hdrSubPhase.textContent = st.stage.sub;
+    hdrSubPhase.style.color = st.stage.color;
+    hdrStation.textContent = STATION_INFO[st.turret.displayStation].short;
+    hdrSpindle.textContent = st.spindleMode;
+    hdrParts.textContent = partsDone;
+
+    for (let i = 0; i < 6; i++) {
+      const el = document.getElementById('tcard-' + i);
+      if (el) el.classList.toggle('active-tool', i === st.turret.displayStation && !st.turret.isIndexing);
+    }
+    const cf = document.getElementById('tcard-front'); if (cf) cf.classList.toggle('active-tool', st.frontLift > 0.05);
+    const cr = document.getElementById('tcard-rear');  if (cr) cr.classList.toggle('active-tool', st.rearLift > 0.05);
+    const cv = document.getElementById('tcard-vert');  if (cv) cv.classList.toggle('active-tool', st.vertLift > 0.05);
+
+    if (st.stage.id !== lastStageId) {
+      lastStageId = st.stage.id;
+      phaseTitleEn.textContent = st.stage.nameEn;
+      phaseDescAr.textContent = st.stage.descAr;
+      if (st.stage.type === 'AUX') {
+        phasePill.textContent = 'AUXILIARY SHAFT (120 RPM)'; phasePill.className = 'phase-pill pill-aux';
+      } else if (st.stage.type === 'RETRACT') {
+        phasePill.textContent = 'RAPID RETRACT (SPRING)'; phasePill.className = 'phase-pill pill-retract';
+      } else if (st.stage.type === 'DWELL') {
+        phasePill.textContent = 'REST / DWELL (1 PART)'; phasePill.className = 'phase-pill pill-dwell';
+      } else {
+        phasePill.textContent = 'MAIN CAMSHAFT (CUTTING)'; phasePill.className = 'phase-pill pill-cam';
+      }
+      activeChips.innerHTML = st.stage.chips.map(c => `<span class="chip">${c}</span>`).join('');
+
+      document.querySelectorAll('.step-item').forEach(el => el.classList.remove('active'));
+      const activeEl = document.getElementById('step-' + st.stage.id);
+      if (activeEl) {
+        activeEl.classList.add('active');
+        // Strictly internal scroll — NEVER moves the main browser window!
+        const elTop = activeEl.offsetTop, elBottom = elTop + activeEl.offsetHeight;
+        const viewTop = timelineList.scrollTop, viewBottom = viewTop + timelineList.clientHeight;
+        if (elTop < viewTop) timelineList.scrollTop = Math.max(0, elTop - 6);
+        else if (elBottom > viewBottom) timelineList.scrollTop = elBottom - timelineList.clientHeight + 6;
+      }
+
+      document.querySelectorAll('#opsTableBody tr').forEach(r => r.classList.remove('active-row'));
+      const activeRow = document.getElementById('trow-' + st.stage.id);
+      if (activeRow) activeRow.classList.add('active-row');
+    }
+  }
+
+  let latestTargetD2 = -1;
+  function renderAll() {
+    const st = getMachineState(camAngle);
+    drawMachineCanvas(st);
+    drawTimelineStrip();
+    drawCamsGallery(st);
+    latestTargetD2 = drawClutchLab(st);
+    drawCamChart();
+    updateSidebar(st);
+  }
+
+  function loop(now) {
+    const dt = Math.min(0.05, (now - lastTime) / 1000);
+    lastTime = now;
+
+    if (isPlaying) {
+      camAngle += dt * 18 * speedMult;
+      if (camAngle >= 360) { camAngle -= 360; partsDone++; }
+      auxAngle += dt * 12 * speedMult;
+      const st = getMachineState(camAngle);
+      spindleAngle += dt * 18 * st.spindleSpeedVal * speedMult;
+    } else {
+      auxAngle += dt * 4.5;
+    }
+
+    if (d1SlowTestActive) {
+      d1SlowTestPhase += dt * 0.165; // ~6 seconds ultra-clear slow-mo!
+      if (d1SlowTestPhase >= 1) { d1SlowTestActive = false; d1SlowTestPhase = 0; }
+    }
+
+    d2SleevePos += (latestTargetD2 - d2SleevePos) * Math.min(1, dt * 10);
+    gearAAngle += dt * 4.5;
+    gearBAngle -= dt * 2.2;
+    if (d2SleevePos < -0.65) d2OutputAngle += dt * 4.5;
+    else if (d2SleevePos > 0.65) d2OutputAngle -= dt * 2.2;
+
+    renderAll();
+    requestAnimationFrame(loop);
+  }
+
+  sCanvas.addEventListener('click', (e) => {
+    const rect = sCanvas.getBoundingClientRect();
+    camAngle = Math.max(0, Math.min(359.5, ((e.clientX - rect.left) / rect.width) * 360));
+    renderAll();
+  });
+
+  btnPlayPause.addEventListener('click', () => {
+    isPlaying = !isPlaying;
+    btnPlayPause.textContent = isPlaying ? '⏸ Pause' : '▶ Play';
+    runDot.style.background = isPlaying ? '#10b981' : '#f59e0b';
+    runDot.style.boxShadow = isPlaying ? '0 0 8px #10b981' : '0 0 8px #f59e0b';
+  });
+  document.getElementById('btnStepM5').addEventListener('click', () => { isPlaying = false; btnPlayPause.textContent = '▶ Play'; camAngle = (camAngle - 5 + 360) % 360; renderAll(); });
+  document.getElementById('btnStepM1').addEventListener('click', () => { isPlaying = false; btnPlayPause.textContent = '▶ Play'; camAngle = (camAngle - 1 + 360) % 360; renderAll(); });
+  document.getElementById('btnStepP1').addEventListener('click', () => { isPlaying = false; btnPlayPause.textContent = '▶ Play'; camAngle = (camAngle + 1) % 360; renderAll(); });
+  document.getElementById('btnStepP5').addEventListener('click', () => { isPlaying = false; btnPlayPause.textContent = '▶ Play'; camAngle = (camAngle + 5) % 360; renderAll(); });
+  document.getElementById('btnReset').addEventListener('click', () => { camAngle = 0; partsDone = 0; renderAll(); });
+  angleSlider.addEventListener('input', (e) => { camAngle = parseFloat(e.target.value); renderAll(); });
+
+  document.querySelectorAll('.speed-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      speedMult = parseFloat(btn.dataset.speed);
+    });
+  });
+
+  document.querySelectorAll('.d1-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.d1-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      d1Selected = btn.dataset.c;
+      d1SlowTestActive = false;
+      renderAll();
+    });
+  });
+  btnSlowTestD1.addEventListener('click', () => {
+    d1SlowTestActive = true;
+    d1SlowTestPhase = 0.001;
+  });
+
+  document.querySelectorAll('.d2-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.d2-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      d2ManualMode = btn.dataset.m;
+    });
+  });
+
+  renderAll();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
